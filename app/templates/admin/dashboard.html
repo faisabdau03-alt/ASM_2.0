@@ -4,90 +4,144 @@
 {% block header_title %}Ringkasan Operasional & Dashboard{% endblock %}
 
 {% block content %}
+<!-- WELCOME EXECUTIVE BANNER -->
+<div class="dashboard-hero-banner mb-4">
+    <div class="row align-items-center g-3">
+        <div class="col-lg-8">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge bg-warning text-dark px-2.5 py-1 rounded-pill fw-bold" style="font-size: 0.72rem;">OPERASIONAL BUS</span>
+                <span class="text-white-50 small"><i class="fa-solid fa-clock me-1"></i> Panel Kontrol Real-Time</span>
+            </div>
+            <h3 class="text-white fw-bold mb-1">Selamat Datang di Dashboard, {{ current_user.full_name }}!</h3>
+            <p class="text-white-50 mb-0 small" style="max-width: 650px;">
+                Pantau seluruh permintaan sewa bus pariwisata, kesiapan armada, dan konfirmasi pemesanan dari pelanggan secara terpusat.
+            </p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+            <div class="d-inline-flex flex-wrap gap-2">
+                <a href="{{ url_for('admin.bookings_list') }}" class="btn btn-warning text-dark fw-bold px-3 py-2 rounded-3 shadow-sm">
+                    <i class="fa-solid fa-calendar-check me-1"></i> Data Pemesanan
+                </a>
+                <a href="{{ url_for('admin.fleet_create') }}" class="btn btn-outline-light px-3 py-2 rounded-3">
+                    <i class="fa-solid fa-plus me-1"></i> Unit Baru
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- KPI METRIC CARDS -->
 <div class="row g-3 mb-4">
+    <!-- Card 1: Total Pemesanan -->
     <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
-            <div>
-                <div class="stat-label">Total Pemesanan</div>
-                <div class="stat-value">{{ total_bookings }}</div>
-                <small class="text-muted"><i class="fa-solid fa-clock-rotate-left me-1"></i> Seluruh Riwayat</small>
+        <div class="stat-card accent-blue">
+            <div class="stat-card-header">
+                <span class="stat-label">Total Pemesanan</span>
+                <div class="stat-icon blue">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
             </div>
-            <div class="stat-icon blue">
-                <i class="fa-solid fa-calendar-check"></i>
+            <div class="stat-value">{{ total_bookings }}</div>
+            <div class="stat-footer">
+                <span class="stat-pill neutral">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Seluruh Riwayat
+                </span>
             </div>
         </div>
     </div>
 
+    <!-- Card 2: Perlu Konfirmasi -->
     <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
-            <div>
-                <div class="stat-label">Perlu Konfirmasi</div>
-                <div class="stat-value text-danger">{{ pending_bookings }}</div>
-                <small class="text-danger fw-semibold"><i class="fa-solid fa-bell me-1"></i> Menunggu Respon</small>
+        <div class="stat-card accent-red">
+            <div class="stat-card-header">
+                <span class="stat-label">Perlu Konfirmasi</span>
+                <div class="stat-icon red">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
             </div>
-            <div class="stat-icon red">
-                <i class="fa-solid fa-hourglass-half"></i>
+            <div class="stat-value text-danger">{{ pending_bookings }}</div>
+            <div class="stat-footer">
+                <span class="stat-pill danger">
+                    <i class="fa-solid fa-circle-exclamation"></i> Menunggu Respon
+                </span>
             </div>
         </div>
     </div>
 
+    <!-- Card 3: Pemesanan Disetujui -->
     <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
-            <div>
-                <div class="stat-label">Pemesanan Disetujui</div>
-                <div class="stat-value text-success">{{ confirmed_bookings }}</div>
-                <small class="text-success"><i class="fa-solid fa-check-circle me-1"></i> Siap Beroperasi</small>
+        <div class="stat-card accent-green">
+            <div class="stat-card-header">
+                <span class="stat-label">Pemesanan Disetujui</span>
+                <div class="stat-icon green">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
             </div>
-            <div class="stat-icon green">
-                <i class="fa-solid fa-clipboard-check"></i>
+            <div class="stat-value text-success">{{ confirmed_bookings }}</div>
+            <div class="stat-footer">
+                <span class="stat-pill success">
+                    <i class="fa-solid fa-circle-check"></i> Siap Beroperasi
+                </span>
             </div>
         </div>
     </div>
 
+    <!-- Card 4: Total Unit Armada -->
     <div class="col-sm-6 col-xl-3">
-        <div class="stat-card">
-            <div>
-                <div class="stat-label">Total Unit Armada</div>
-                <div class="stat-value">{{ total_fleets }}</div>
-                <small class="text-muted"><i class="fa-solid fa-bus me-1"></i> {{ active_fleets }} Unit Aktif</small>
+        <div class="stat-card accent-orange">
+            <div class="stat-card-header">
+                <span class="stat-label">Total Unit Armada</span>
+                <div class="stat-icon orange">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
             </div>
-            <div class="stat-icon orange">
-                <i class="fa-solid fa-van-shuttle"></i>
+            <div class="stat-value">{{ total_fleets }}</div>
+            <div class="stat-footer">
+                <span class="stat-pill primary">
+                    <i class="fa-solid fa-check"></i> {{ active_fleets }} Unit Aktif
+                </span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- QUICK ACTION SHORTCUTS -->
-<div class="admin-card mb-4">
-    <div class="admin-card-body p-3">
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-            <span class="fw-bold text-navy"><i class="fa-solid fa-bolt text-warning me-2"></i> Aksi Cepat:</span>
-            <div class="d-flex flex-wrap gap-2">
-                <a href="{{ url_for('admin.fleet_create') }}" class="btn btn-sm btn-outline-primary">
-                    <i class="fa-solid fa-plus me-1"></i> Tambah Armada Baru
-                </a>
-                <a href="{{ url_for('admin.service_create') }}" class="btn btn-sm btn-outline-secondary">
-                    <i class="fa-solid fa-plus me-1"></i> Tambah Layanan
-                </a>
-                <a href="{{ url_for('admin.gallery_create') }}" class="btn btn-sm btn-outline-secondary">
-                    <i class="fa-solid fa-upload me-1"></i> Unggah Foto Galeri
-                </a>
-                <a href="{{ url_for('admin.bookings_list') }}" class="btn btn-sm btn-primary">
-                    <i class="fa-solid fa-list-check me-1"></i> Kelola Pemesanan
-                </a>
+<!-- QUICK ACTION COMMAND STRIP -->
+<div class="quick-action-strip mb-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-2">
+            <div class="stat-icon orange" style="width: 34px; height: 34px; font-size: 0.95rem;">
+                <i class="fa-solid fa-bolt"></i>
             </div>
+            <span class="fw-bold text-navy small">Aksi Cepat Manajemen:</span>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('admin.fleet_create') }}" class="quick-btn primary">
+                <i class="fa-solid fa-bus"></i> Tambah Armada
+            </a>
+            <a href="{{ url_for('admin.bookings_list') }}" class="quick-btn">
+                <i class="fa-solid fa-calendar-check text-primary"></i> Kelola Pemesanan
+            </a>
+            <a href="{{ url_for('admin.service_create') }}" class="quick-btn">
+                <i class="fa-solid fa-route text-success"></i> Tambah Layanan
+            </a>
+            <a href="{{ url_for('admin.gallery_create') }}" class="quick-btn">
+                <i class="fa-solid fa-images text-warning"></i> Unggah Galeri
+            </a>
+            <a href="{{ url_for('admin.settings') }}" class="quick-btn">
+                <i class="fa-solid fa-gear text-secondary"></i> Pengaturan
+            </a>
         </div>
     </div>
 </div>
 
-<!-- RECENT BOOKINGS TABLE -->
+<!-- RECENT BOOKINGS TABLE CARD -->
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5 class="admin-card-title"><i class="fa-solid fa-list me-2 text-primary"></i> Permintaan Pemesanan Terbaru</h5>
-        <a href="{{ url_for('admin.bookings_list') }}" class="btn btn-sm btn-outline-dark">
-            Lihat Semua ({{ total_bookings }})
+        <h5 class="admin-card-title">
+            <i class="fa-solid fa-clipboard-list text-primary"></i> Permintaan Pemesanan Terbaru
+        </h5>
+        <a href="{{ url_for('admin.bookings_list') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold">
+            Lihat Semua ({{ total_bookings }}) <i class="fa-solid fa-arrow-right ms-1"></i>
         </a>
     </div>
     <div class="admin-card-body p-0">
@@ -95,60 +149,69 @@
             <table class="table table-admin align-middle">
                 <thead>
                     <tr>
-                        <th>Kode Booking</th>
+                        <th style="width: 150px;">Kode Booking</th>
                         <th>Nama Pelanggan</th>
-                        <th>Armada Dipilih</th>
-                        <th>Rute (Jemput &rarr; Tujuan)</th>
+                        <th>Armada & Unit</th>
+                        <th>Rute Perjalanan</th>
                         <th>Tgl Berangkat</th>
                         <th>Durasi</th>
                         <th>Status</th>
-                        <th class="text-end">Aksi</th>
+                        <th class="text-end" style="width: 80px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for b in recent_bookings %}
                     <tr>
                         <td>
-                            <strong class="text-primary">{{ b.booking_code }}</strong>
+                            <span class="booking-code-badge">{{ b.booking_code }}</span>
                         </td>
                         <td>
-                            <div class="fw-semibold text-navy">{{ b.customer_name }}</div>
-                            <small class="text-muted"><i class="fa-brands fa-whatsapp text-success me-1"></i>{{ b.customer_phone }}</small>
+                            <div class="fw-bold text-navy">{{ b.customer_name }}</div>
+                            <small class="text-muted">
+                                <a href="https://wa.me/{{ b.customer_phone|replace(' ', '')|replace('-', '')|replace('+', '') }}" target="_blank" class="text-success text-decoration-none">
+                                    <i class="fa-brands fa-whatsapp me-1"></i>{{ b.customer_phone }}
+                                </a>
+                            </small>
                         </td>
                         <td>
-                            <div>{{ b.fleet.name if b.fleet else 'Konsultasi Admin' }}</div>
-                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle" style="font-size: 0.72rem;"><i class="fa-solid fa-bus me-1"></i>{{ b.bus_count }} Unit</span>
+                            <div class="fw-semibold">{{ b.fleet.name if b.fleet else 'Konsultasi Admin' }}</div>
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle" style="font-size: 0.72rem;">
+                                <i class="fa-solid fa-bus me-1"></i>{{ b.bus_count }} Unit Bus
+                            </span>
                         </td>
                         <td>
-                            <div class="small fw-medium">{{ b.pickup_location }} &rarr; {{ b.destination }}</div>
-                            <small class="text-muted">{{ b.passenger_count }} Penumpang</small>
+                            <div class="small fw-semibold text-navy">
+                                {{ b.pickup_location }} <i class="fa-solid fa-arrow-right-long text-muted mx-1"></i> {{ b.destination }}
+                            </div>
+                            <small class="text-muted"><i class="fa-solid fa-users me-1"></i>{{ b.passenger_count }} Penumpang</small>
                         </td>
                         <td>
-                            {{ b.departure_date.strftime('%d/%m/%Y') }}
+                            <div class="fw-semibold">{{ b.departure_date.strftime('%d/%m/%Y') }}</div>
                         </td>
                         <td>
                             <span class="badge bg-light text-dark border">{{ b.duration_days }} Hari</span>
                         </td>
                         <td>
                             {% if b.status == 'Menunggu Konfirmasi' %}
-                                <span class="status-pill warning"><i class="fa-solid fa-clock"></i> {{ b.status }}</span>
+                                <span class="status-pill warning"><span class="status-dot"></span> {{ b.status }}</span>
                             {% elif b.status == 'Dikonfirmasi' %}
-                                <span class="status-pill success"><i class="fa-solid fa-check"></i> {{ b.status }}</span>
+                                <span class="status-pill success"><span class="status-dot"></span> {{ b.status }}</span>
                             {% elif b.status == 'Selesai' %}
-                                <span class="status-pill info"><i class="fa-solid fa-flag-checkered"></i> {{ b.status }}</span>
+                                <span class="status-pill info"><span class="status-dot"></span> {{ b.status }}</span>
                             {% else %}
-                                <span class="status-pill danger"><i class="fa-solid fa-ban"></i> {{ b.status }}</span>
+                                <span class="status-pill danger"><span class="status-dot"></span> {{ b.status }}</span>
                             {% endif %}
                         </td>
                         <td class="text-end">
-                            <a href="{{ url_for('admin.booking_detail', id=b.id) }}" class="btn-action-icon edit" title="Lihat Detail & Update">
+                            <a href="{{ url_for('admin.booking_detail', id=b.id) }}" class="btn-action-icon edit" title="Lihat Detail & Perbarui Status">
                                 <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="8" class="text-center py-4 text-muted">
+                        <td colspan="8" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-inbox fs-2 text-muted mb-2 d-block"></i>
                             Belum ada pemesanan masuk.
                         </td>
                     </tr>
@@ -162,27 +225,29 @@
 <!-- FLEET SUMMARY OVERVIEW -->
 <div class="admin-card">
     <div class="admin-card-header">
-        <h5 class="admin-card-title"><i class="fa-solid fa-bus me-2 text-warning"></i> Ringkasan Armada Terdaftar</h5>
-        <a href="{{ url_for('admin.fleets_list') }}" class="btn btn-sm btn-outline-dark">
-            Kelola Seluruh Armada
+        <h5 class="admin-card-title">
+            <i class="fa-solid fa-bus text-warning"></i> Ringkasan Unit Armada Bus
+        </h5>
+        <a href="{{ url_for('admin.fleets_list') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 fw-semibold">
+            Kelola Seluruh Armada ({{ total_fleets }}) <i class="fa-solid fa-arrow-right ms-1"></i>
         </a>
     </div>
-    <div class="admin-card-body">
+    <div class="admin-card-body p-4">
         <div class="row g-3">
             {% for f in recent_fleets %}
             <div class="col-md-6 col-xl-3">
                 <div class="p-3 border rounded-3 h-100 bg-light d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-navy small">{{ f.category }}</span>
-                            <span class="badge {% if f.status == 'Tersedia' %}bg-success{% else %}bg-warning text-dark{% endif %} small">{{ f.status }}</span>
+                            <span class="badge bg-navy small" style="font-size: 0.72rem;">{{ f.category }}</span>
+                            <span class="badge {% if f.status == 'Tersedia' %}bg-success{% else %}bg-warning text-dark{% endif %} small" style="font-size: 0.72rem;">{{ f.status }}</span>
                         </div>
-                        <h6 class="fw-bold text-navy mb-1">{{ f.name }}</h6>
-                        <small class="text-muted d-block mb-2">{{ f.seat_capacity }} Kursi | {{ f.transmission }}</small>
+                        <h6 class="fw-bold text-navy mb-1 text-truncate" title="{{ f.name }}">{{ f.name }}</h6>
+                        <small class="text-muted d-block mb-2">{{ f.seat_capacity }} Kursi &bull; {{ f.transmission }}</small>
                     </div>
                     <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-2">
-                        <small class="text-muted">{{ f.price_estimate }}</small>
-                        <a href="{{ url_for('admin.fleet_edit', id=f.id) }}" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Edit">
+                        <small class="text-muted text-truncate" style="max-width: 140px;">{{ f.price_estimate }}</small>
+                        <a href="{{ url_for('admin.fleet_edit', id=f.id) }}" class="btn btn-sm btn-outline-secondary py-0 px-2" title="Edit Armada">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                     </div>
@@ -193,4 +258,3 @@
     </div>
 </div>
 {% endblock %}
-

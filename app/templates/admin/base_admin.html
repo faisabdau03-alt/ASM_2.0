@@ -31,9 +31,9 @@
         <div class="sidebar-header">
             <a href="{{ url_for('admin.dashboard') }}" class="sidebar-brand">
                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ASM Logo">
-                <div>
-                    <span>ASM</span> ADMIN
-                    <div style="font-size: 0.65rem; color: #94A3B8; font-weight: normal; letter-spacing: 0.05em;">PO ALULA SADIDA MARYAM</div>
+                <div class="d-flex flex-column">
+                    <div><span>ASM</span> ADMIN</div>
+                    <span class="sidebar-brand-sub">PO ALULA SADIDA MARYAM</span>
                 </div>
             </a>
         </div>
@@ -91,7 +91,7 @@
                         {{ current_user.username[0]|upper if current_user.is_authenticated else 'A' }}
                     </div>
                     <div class="user-info-text">
-                        <div class="user-name">{{ current_user.full_name if current_user.is_authenticated else 'Admin' }}</div>
+                        <div class="user-name text-truncate" style="max-width: 130px;">{{ current_user.full_name if current_user.is_authenticated else 'Admin' }}</div>
                         <div class="user-role">{{ current_user.role|capitalize if current_user.is_authenticated else 'Administrator' }}</div>
                     </div>
                 </div>
@@ -110,22 +110,34 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary d-lg-none" id="sidebarToggle">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <h5 class="mb-0 fw-bold text-navy">{% block header_title %}Panel Administrasi ASM Transport{% endblock %}</h5>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-light text-navy border py-1.5 px-2.5 rounded-pill d-none d-sm-inline-block">
+                        <i class="fa-solid fa-shield-halved text-orange me-1"></i> Admin Panel
+                    </span>
+                    <h5 class="mb-0 fw-bold text-navy fs-6">{% block header_title %}Panel Administrasi ASM Transport{% endblock %}</h5>
+                </div>
             </div>
 
             <div class="d-flex align-items-center gap-3">
-                <a href="{{ url_for('main.index') }}" target="_blank" class="btn btn-sm btn-outline-dark d-none d-sm-inline-flex align-items-center gap-1">
-                    <i class="fa-solid fa-globe"></i> Website Utama
+                <a href="{{ url_for('main.index') }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3 d-none d-sm-inline-flex align-items-center gap-1.5">
+                    <i class="fa-solid fa-globe text-primary"></i> Website Utama
                 </a>
                 <div class="dropdown">
-                    <button class="btn btn-sm btn-light border dropdown-toggle fw-semibold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user-circle text-orange me-1"></i> {{ current_user.username if current_user.is_authenticated else 'Admin' }}
+                    <button class="btn btn-sm btn-light border dropdown-toggle fw-semibold rounded-pill px-3 py-1.5 d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="badge rounded-circle bg-orange text-white p-1" style="width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.72rem;">
+                            {{ current_user.username[0]|upper if current_user.is_authenticated else 'A' }}
+                        </span>
+                        <span>{{ current_user.username if current_user.is_authenticated else 'Admin' }}</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                        <li><a class="dropdown-item" href="{{ url_for('admin.profile') }}"><i class="fa-solid fa-key me-2 text-muted"></i> Ganti Password</a></li>
-                        <li><a class="dropdown-item" href="{{ url_for('admin.settings') }}"><i class="fa-solid fa-gear me-2 text-muted"></i> Pengaturan Web</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}"><i class="fa-solid fa-right-from-bracket me-2"></i> Keluar</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-1">
+                        <li class="px-3 py-2 border-bottom">
+                            <small class="text-muted d-block">Masuk sebagai:</small>
+                            <strong class="text-navy small">{{ current_user.email if current_user.is_authenticated else 'admin@asmtransport.com' }}</strong>
+                        </li>
+                        <li><a class="dropdown-item py-2" href="{{ url_for('admin.profile') }}"><i class="fa-solid fa-key me-2 text-muted"></i> Ganti Password</a></li>
+                        <li><a class="dropdown-item py-2" href="{{ url_for('admin.settings') }}"><i class="fa-solid fa-gear me-2 text-muted"></i> Pengaturan Web</a></li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li><a class="dropdown-item py-2 text-danger" href="{{ url_for('auth.logout') }}"><i class="fa-solid fa-right-from-bracket me-2"></i> Keluar / Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -137,7 +149,7 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                        <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm rounded-3 border-0" role="alert">
                             {% if category == 'success' %}
                                 <i class="fa-solid fa-circle-check me-2"></i>
                             {% elif category == 'danger' %}
@@ -167,4 +179,3 @@
 {% block extra_js %}{% endblock %}
 </body>
 </html>
-
