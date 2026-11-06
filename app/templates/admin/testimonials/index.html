@@ -1,0 +1,92 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Kelola Testimoni Pelanggan{% endblock %}
+{% block header_title %}Manajemen Testimoni & Ulasan Pelanggan{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h4 class="fw-bold text-navy mb-1">Daftar Testimoni Pelanggan</h4>
+        <p class="text-muted small mb-0">Kelola ulasan kepuasan dari penyewa bus pariwisata yang ditampilkan di website.</p>
+    </div>
+    <a href="{{ url_for('admin.testimonial_create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
+        <i class="fa-solid fa-plus"></i> Tambah Testimoni Baru
+    </a>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-admin align-middle">
+                <thead>
+                    <tr>
+                        <th>Pelanggan / Instansi</th>
+                        <th>Rating</th>
+                        <th>Ulasan / Testimoni</th>
+                        <th>Tampil Beranda</th>
+                        <th>Status</th>
+                        <th class="text-end">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in testimonials %}
+                    <tr>
+                        <td>
+                            <strong class="text-navy">{{ t.customer_name }}</strong>
+                            <small class="text-muted d-block">{{ t.customer_role_or_org or 'Pelanggan Umum' }}</small>
+                        </td>
+                        <td>
+                            <span class="text-warning">
+                                {% for i in range(t.rating) %}
+                                    <i class="fa-solid fa-star"></i>
+                                {% endfor %}
+                            </span>
+                            <small class="text-muted">({{ t.rating }}/5)</small>
+                        </td>
+                        <td>
+                            <div class="small text-muted" style="max-width: 450px;">
+                                "{{ t.content }}"
+                            </div>
+                        </td>
+                        <td>
+                            {% if t.is_featured %}
+                                <span class="badge bg-warning text-dark"><i class="fa-solid fa-star me-1"></i> Ya</span>
+                            {% else %}
+                                <span class="text-muted small">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if t.is_active %}
+                                <span class="badge bg-success-subtle text-success">Aktif</span>
+                            {% else %}
+                                <span class="badge bg-danger-subtle text-danger">Nonaktif</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1">
+                                <a href="{{ url_for('admin.testimonial_edit', id=t.id) }}" class="btn-action-icon edit" title="Edit Testimoni">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <form method="POST" action="{{ url_for('admin.testimonial_delete', id=t.id) }}" class="d-inline form-delete-confirm" data-confirm-message="Hapus testimoni dari '{{ t.customer_name }}'?">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn-action-icon delete" title="Hapus Testimoni">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            Belum ada ulasan testimoni.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

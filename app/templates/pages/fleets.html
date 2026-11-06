@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}Katalog Armada Bus Pariwisata{% endblock %}
+{% block meta_description %}Daftar lengkap armada bus pariwisata ASM Transport Kebumen. Big Bus 50 seats, Medium Bus 33 seats, Executive Bus, hingga Minibus HiAce terawat prima.{% endblock %}
+
+{% block content %}
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Katalog Armada Bus</h1>
+        <p class="text-white-50 max-w-600 mx-auto mb-0">Pilihan Bus Pariwisata Modern, Nyaman, dan Siap Menemani Seluruh Rute Perjalanan Anda</p>
+        <nav aria-label="breadcrumb" class="mt-3">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Beranda</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Katalog Armada</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- FLEET CATALOG CONTENT -->
+<section class="section-padding">
+    <div class="container">
+        <!-- Category Filter Pills -->
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+            <a href="{{ url_for('main.fleets') }}" 
+               class="btn btn-sm px-4 py-2 rounded-pill fw-semibold {% if not current_category %}btn-asm-navy{% else %}btn-outline-secondary{% endif %}">
+                Semua Armada
+            </a>
+            {% for cat in categories %}
+            <a href="{{ url_for('main.fleets', kategori=cat) }}" 
+               class="btn btn-sm px-4 py-2 rounded-pill fw-semibold {% if current_category == cat %}btn-asm-navy{% else %}btn-outline-secondary{% endif %}">
+                {{ cat }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Fleet Grid -->
+        {% if fleets %}
+        <div class="row g-4">
+            {% for fleet in fleets %}
+            <div class="col-lg-4 col-md-6">
+                <div class="fleet-card">
+                    <div class="fleet-img-wrap">
+                        <img src="{{ url_for('static', filename=fleet.main_image) }}" alt="{{ fleet.name }}" loading="lazy">
+                        <span class="fleet-category-badge">{{ fleet.category }}</span>
+                        <span class="fleet-capacity-badge"><i class="fa-solid fa-users me-1"></i> {{ fleet.seat_capacity }} Seats</span>
+                    </div>
+                    <div class="fleet-card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="badge {% if fleet.status == 'Tersedia' %}bg-success-subtle text-success border border-success-subtle{% else %}bg-warning-subtle text-warning border border-warning-subtle{% endif %} small">
+                                <i class="fa-solid fa-circle me-1" style="font-size: 0.5rem;"></i> {{ fleet.status }}
+                            </span>
+                            <small class="text-muted fw-semibold">{{ fleet.chassis_engine }}</small>
+                        </div>
+
+                        <h3 class="fleet-card-title">{{ fleet.name }}</h3>
+                        
+                        <div class="fleet-specs-grid">
+                            <div class="fleet-specs-item">
+                                <i class="fa-solid fa-chair"></i>
+                                <span>Kursi: {{ fleet.seat_configuration }}</span>
+                            </div>
+                            <div class="fleet-specs-item">
+                                <i class="fa-solid fa-gears"></i>
+                                <span>{{ fleet.transmission }}</span>
+                            </div>
+                        </div>
+
+                        <p class="text-muted small mb-3 text-truncate-2">
+                            {{ fleet.description }}
+                        </p>
+
+                        <!-- Facilities preview tags -->
+                        <div class="fleet-facilities-tags">
+                            {% for fac in fleet.facilities_list[:4] %}
+                                <span class="facility-tag"><i class="fa-solid fa-check text-orange me-1"></i>{{ fac }}</span>
+                            {% endfor %}
+                            {% if fleet.facilities_list|length > 4 %}
+                                <span class="facility-tag text-muted">+{{ fleet.facilities_list|length - 4 }} Lainnya</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="fleet-card-footer">
+                            <a href="{{ url_for('main.fleet_detail', slug=fleet.slug) }}" class="btn btn-sm btn-outline-secondary fw-semibold">
+                                <i class="fa-solid fa-circle-info me-1"></i> Spesifikasi
+                            </a>
+                            <a href="{{ url_for('main.booking', fleet_id=fleet.id) }}" class="btn btn-sm btn-asm-primary">
+                                Pesan Bus Ini <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="fs-1 text-muted mb-3"><i class="fa-solid fa-bus"></i></div>
+            <h4 class="text-navy fw-bold">Belum Ada Armada di Kategori Ini</h4>
+            <p class="text-muted">Silakan pilih kategori bus lain atau hubungi admin untuk armada kustom.</p>
+            <a href="{{ url_for('main.fleets') }}" class="btn-asm-navy mt-2">Lihat Semua Armada</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- BOOKING BANNER -->
+<section class="bg-light-surface py-5 border-top">
+    <div class="container text-center">
+        <h3 class="fw-bold text-navy mb-2">Butuh Bantuan Menentukan Ukuran Bus yang Pas?</h3>
+        <p class="text-muted mb-4 max-w-600 mx-auto">
+            Tim reservasi ASM Transport siap memberikan konsultasi gratis untuk memilih armada yang paling sesuai dengan jumlah rombongan dan rute tujuan Anda.
+        </p>
+        <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Halo%20Admin%20ASM%20Transport,%20saya%20ingin%20konsultasi%20pilihan%20bus%20yang%20sesuai%20rombongan%20kami." target="_blank" class="btn-asm-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Konsultasi via WhatsApp Sekarang
+        </a>
+    </div>
+</section>
+{% endblock %}
+

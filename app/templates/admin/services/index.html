@@ -1,0 +1,82 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Kelola Layanan Transportasi{% endblock %}
+{% block header_title %}Manajemen Layanan Transportasi{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h4 class="fw-bold text-navy mb-1">Daftar Layanan Transportasi</h4>
+        <p class="text-muted small mb-0">Kelola paket dan jenis layanan sewa bus pariwisata yang ditampilkan di website.</p>
+    </div>
+    <a href="{{ url_for('admin.service_create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
+        <i class="fa-solid fa-plus"></i> Tambah Layanan Baru
+    </a>
+</div>
+
+<div class="admin-card">
+    <div class="admin-card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-admin align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">Urutan</th>
+                        <th style="width: 60px;">Ikon</th>
+                        <th>Judul Layanan</th>
+                        <th>Ringkasan</th>
+                        <th>Status</th>
+                        <th class="text-end">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in services %}
+                    <tr>
+                        <td class="text-center fw-bold text-muted">{{ s.display_order }}</td>
+                        <td>
+                            <div class="stat-icon orange" style="width: 40px; height: 40px; font-size: 1.1rem;">
+                                <i class="{{ s.icon }}"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <strong class="text-navy">{{ s.title }}</strong>
+                        </td>
+                        <td>
+                            <div class="small text-muted text-truncate" style="max-width: 420px;">
+                                {{ s.short_description }}
+                            </div>
+                        </td>
+                        <td>
+                            {% if s.is_active %}
+                                <span class="badge bg-success-subtle text-success">Aktif</span>
+                            {% else %}
+                                <span class="badge bg-danger-subtle text-danger">Nonaktif</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1">
+                                <a href="{{ url_for('admin.service_edit', id=s.id) }}" class="btn-action-icon edit" title="Edit Layanan">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <form method="POST" action="{{ url_for('admin.service_delete', id=s.id) }}" class="d-inline form-delete-confirm" data-confirm-message="Hapus layanan '{{ s.title }}'?">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn-action-icon delete" title="Hapus Layanan">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            Belum ada layanan yang ditambahkan.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

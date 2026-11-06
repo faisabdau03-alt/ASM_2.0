@@ -1,0 +1,128 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Kelola Data Pemesanan{% endblock %}
+{% block header_title %}Manajemen Permintaan Pemesanan Sewa Bus{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h4 class="fw-bold text-navy mb-1">Daftar Permintaan Pemesanan Masuk</h4>
+        <p class="text-muted small mb-0">Pantau seluruh permintaan sewa bus pariwisata dari calon penyewa dan ubah status operasional.</p>
+    </div>
+</div>
+
+<!-- Status Filters -->
+<div class="admin-card mb-4">
+    <div class="admin-card-body p-3">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ url_for('admin.bookings_list') }}" 
+                   class="btn btn-sm {% if not current_status %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    Semua Pemesanan
+                </a>
+                {% for st in statuses %}
+                <a href="{{ url_for('admin.bookings_list', status=st) }}" 
+                   class="btn btn-sm {% if current_status == st %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                    {{ st }}
+                </a>
+                {% endfor %}
+            </div>
+
+            {% if current_status %}
+            <a href="{{ url_for('admin.bookings_list') }}" class="btn btn-sm btn-link text-muted">
+                <i class="fa-solid fa-rotate-left me-1"></i> Bersihkan Filter
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Bookings Table -->
+<div class="admin-card">
+    <div class="admin-card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-admin align-middle">
+                <thead>
+                    <tr>
+                        <th>Kode Reservasi</th>
+                        <th>Data Pelanggan</th>
+                        <th>Armada Bus</th>
+                        <th>Jadwal Keberangkatan</th>
+                        <th>Durasi</th>
+                        <th>Rute Perjalanan</th>
+                        <th>Status</th>
+                        <th class="text-end">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in bookings %}
+                    <tr>
+                        <td>
+                            <strong class="text-primary">{{ b.booking_code }}</strong>
+                            <small class="text-muted d-block">{{ b.created_at.strftime('%d/%m/%Y %H:%M') }}</small>
+                        </td>
+                        <td>
+                            <div class="fw-bold text-navy">{{ b.customer_name }}</div>
+                            <div class="small">
+                                <a href="https://wa.me/{{ b.customer_phone|replace(' ', '')|replace('-', '')|replace('+', '') }}" target="_blank" class="text-success text-decoration-none">
+                                    <i class="fa-brands fa-whatsapp me-1"></i>{{ b.customer_phone }}
+                                </a>
+                            </div>
+                            {% if b.customer_email %}
+                            <small class="text-muted">{{ b.customer_email }}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="fw-semibold">{{ b.fleet.name if b.fleet else 'Pilihan Fleksibel' }}</div>
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle"><i class="fa-solid fa-bus me-1"></i>{{ b.bus_count }} Unit Bus</span>
+                        </td>
+                        <td>
+                            <div class="fw-semibold">{{ b.departure_date.strftime('%d/%m/%Y') }}</div>
+                            <small class="text-muted">s/d {{ b.return_date.strftime('%d/%m/%Y') }}</small>
+                        </td>
+                        <td>
+                            <span class="badge bg-light text-dark border">{{ b.duration_days }} Hari</span>
+                        </td>
+                        <td>
+                            <div class="small fw-semibold">{{ b.pickup_location }} &rarr; {{ b.destination }}</div>
+                            <small class="text-muted"><i class="fa-solid fa-users me-1"></i>{{ b.passenger_count }} Penumpang</small>
+                        </td>
+                        <td>
+                            {% if b.status == 'Menunggu Konfirmasi' %}
+                                <span class="status-pill warning"><i class="fa-solid fa-clock"></i> {{ b.status }}</span>
+                            {% elif b.status == 'Dikonfirmasi' %}
+                                <span class="status-pill success"><i class="fa-solid fa-check"></i> {{ b.status }}</span>
+                            {% elif b.status == 'Selesai' %}
+                                <span class="status-pill info"><i class="fa-solid fa-flag-checkered"></i> {{ b.status }}</span>
+                            {% else %}
+                                <span class="status-pill danger"><i class="fa-solid fa-ban"></i> {{ b.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-1">
+                                <a href="{{ url_for('admin.booking_detail', id=b.id) }}" class="btn-action-icon edit" title="Lihat & Proses Detail">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                                <form method="POST" action="{{ url_for('admin.booking_delete', id=b.id) }}" class="d-inline form-delete-confirm" data-confirm-message="Hapus data pemesanan '{{ b.booking_code }}'?">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn-action-icon delete" title="Hapus Pemesanan">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center py-5 text-muted">
+                            Belum ada pemesanan dalam kategori status ini.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

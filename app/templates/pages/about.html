@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil Perusahaan{% endblock %}
+{% block meta_description %}Mengenal lebih dekat ASM Transport Kebumen (PO Alula Sadida Maryam), visi misi, nilai perusahaan, dan standar keselamatan transportasi bus pariwisata.{% endblock %}
+
+{% block content %}
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Profil Perusahaan</h1>
+        <p class="text-white-50 max-w-600 mx-auto mb-0">Mengenal Lebih Dekat Dedikasi PO Alula Sadida Maryam dalam Dunia Transportasi Bus Pariwisata</p>
+        <nav aria-label="breadcrumb" class="mt-3">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Beranda</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Profil Perusahaan</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- COMPANY OVERVIEW -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="section-tag">Sejarah & Identitas</span>
+                <h2 class="section-title">Melayani Perjalanan dengan Sepenuh Hati dari Kebumen untuk Nusantara</h2>
+                <p class="text-muted">
+                    <strong>ASM Transport Kebumen</strong> (beroperasi di bawah naungan PO Alula Sadida Maryam) berpusat di Kabupaten Kebumen, Jawa Tengah. Kami didirikan dengan komitmen untuk menghadirkan sarana transportasi darat yang mengedepankan aspek keselamatan kerja, kenyamanan penumpang, dan kepastian tarif sewa.
+                </p>
+                <p class="text-muted">
+                    Sejak awal beroperasi, kami konsisten memperbarui unit armada bus dengan karoseri terkemuka di Indonesia (Adiputro, Laksana) serta mengadopsi sasis bus terpercaya seperti Mercedes-Benz dan Hino. Hal ini memastikan setiap perjalanan Anda—baik itu wisata keluarga, study tour sekolah, ziarah wali, maupun perjalanan dinas instansi—selalu terjamin keamanannya.
+                </p>
+                
+                <div class="p-3 bg-light rounded-3 border-start border-4 border-warning my-3">
+                    <p class="small text-muted mb-0">
+                        <i class="fa-solid fa-circle-info text-warning me-1"></i> <strong>Catatan Keterbukaan:</strong> Informasi sejarah dan operasional di halaman ini disajikan sebagai data profil contoh pengembangan website resmi ASM Transport Kebumen V2.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="{{ url_for('static', filename='images/hero-bus.jpg') }}" alt="PO Alula Sadida Maryam" class="rounded-4 shadow-lg w-100" style="height: 380px; object-fit: cover;">
+                    <div class="position-absolute bottom-0 end-0 m-4 bg-white p-3 rounded-3 shadow-lg">
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo ASM" style="height: 48px;">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-navy">ASM TRANSPORT</h6>
+                                <small class="text-muted">Kebumen, Jawa Tengah</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VISI & MISI -->
+<section class="section-padding bg-light-surface">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Visi -->
+            <div class="col-lg-6">
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm h-100 border-top border-4 border-warning">
+                    <div class="d-inline-flex p-3 rounded-circle bg-orange-soft text-orange fs-3 mb-3">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h3 class="fw-bold text-navy mb-3">Visi Kami</h3>
+                    <p class="text-muted" style="line-height: 1.8;">
+                        Menjadi perusahaan otobus pariwisata terkemuka dan paling direkomendasikan di Kebumen serta Jawa Tengah, yang dikenal atas standar pelayanan prima, armada yang aman, dan kepuasan pelanggan yang berkelanjutan.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Misi -->
+            <div class="col-lg-6">
+                <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm h-100 border-top border-4 border-navy">
+                    <div class="d-inline-flex p-3 rounded-circle bg-primary-subtle text-primary fs-3 mb-3">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <h3 class="fw-bold text-navy mb-3">Misi Kami</h3>
+                    <ul class="text-muted ps-3 mb-0" style="line-height: 1.8;">
+                        <li class="mb-2">Menyediakan armada bus pariwisata yang selalu prima, bersih, dan dilengkapi fasilitas kenyamanan modern.</li>
+                        <li class="mb-2">Membina kru pengemudi dan asisten bus yang memiliki etos kerja santun, disiplin waktu, dan bersertifikasi keselamatan jalan.</li>
+                        <li class="mb-2">Memberikan kemudahan proses reservasi serta transparansi penawaran harga kepada seluruh lapisan masyarakat.</li>
+                        <li>Turut mendukung kemajuan pariwisata lokal Kebumen dan destinasi pariwisata nusantara secara luas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NILAI-NILAI UTAMA -->
+<section class="section-padding">
+    <div class="container text-center mb-5">
+        <span class="section-tag">Prinsip Kerja</span>
+        <h2 class="section-title">Nilai-Nilai Utama ASM Transport</h2>
+        <p class="section-desc">Empat fondasi nilai yang mendasari setiap layanan dan operasional armada kami.</p>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 rounded-3 border h-100 text-center hover-shadow transition">
+                    <div class="fs-1 text-orange mb-3"><i class="fa-solid fa-shield-heart"></i></div>
+                    <h5 class="fw-bold text-navy">Safety First</h5>
+                    <p class="text-muted small mb-0">Keselamatan penumpang adalah komitmen mutlak tanpa kompromi dalam setiap kilometer perjalanan.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 rounded-3 border h-100 text-center hover-shadow transition">
+                    <div class="fs-1 text-orange mb-3"><i class="fa-solid fa-couch"></i></div>
+                    <h5 class="fw-bold text-navy">Comfort & Cleanliness</h5>
+                    <p class="text-muted small mb-0">Kabin yang bersih, harum, pendingin udara terawat, serta hiburan lengkap untuk kenyamanan terbaik.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 rounded-3 border h-100 text-center hover-shadow transition">
+                    <div class="fs-1 text-orange mb-3"><i class="fa-solid fa-clock-check"></i></div>
+                    <h5 class="fw-bold text-navy">Punctuality</h5>
+                    <p class="text-muted small mb-0">Ketepatan waktu penjemputan dan koordinasi jadwal yang rapi bersama ketua rombongan.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 rounded-3 border h-100 text-center hover-shadow transition">
+                    <div class="fs-1 text-orange mb-3"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <h5 class="fw-bold text-navy">Fair Pricing</h5>
+                    <p class="text-muted small mb-0">Penawaran harga yang transparan, bersaing, tanpa biaya tersembunyi yang memberatkan penyewa.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- STANDAR LEGALITAS (CONTOH DEMO) -->
+<section class="section-padding bg-light-surface">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <span class="section-tag">Kepatuhan Regulasi</span>
+                <h2 class="section-title">Standar Legalitas & Kelaikan Jalan</h2>
+                <p class="text-muted">
+                    Kami senantiasa mematuhi regulasi perhubungan dan standar keselamatan transportasi darat Republik Indonesia:
+                </p>
+
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-white rounded-3 border">
+                            <h6 class="fw-bold text-navy mb-1"><i class="fa-solid fa-file-shield text-success me-2"></i> Izin Operasional Bus</h6>
+                            <p class="small text-muted mb-0">Izin Trayek & Angkutan Pariwisata Resmi (Data Contoh Demo)</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-white rounded-3 border">
+                            <h6 class="fw-bold text-navy mb-1"><i class="fa-solid fa-check-double text-success me-2"></i> Uji KIR Berkala</h6>
+                            <p class="small text-muted mb-0">Pemeriksaan kelaikan teknis rem, ban, emisi & sistem kemudi rutin</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-white rounded-3 border">
+                            <h6 class="fw-bold text-navy mb-1"><i class="fa-solid fa-id-card text-success me-2"></i> SIM & Lisensi Kru</h6>
+                            <p class="small text-muted mb-0">Sopir mengantongi SIM BII Umum aktif & lolos uji kesehatan berkala</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="p-3 bg-white rounded-3 border">
+                            <h6 class="fw-bold text-navy mb-1"><i class="fa-solid fa-kit-medical text-success me-2"></i> Standar Tanggap Darurat</h6>
+                            <p class="small text-muted mb-0">APAR, palu pemecah kaca darurat, dan pintu darurat aktif</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="bg-navy text-white p-4 p-md-5 rounded-4 shadow">
+                    <h4 class="text-white fw-bold mb-3">Siap Merencanakan Wisata Rombongan?</h4>
+                    <p class="text-white-50 small mb-4">
+                        Percayakan perjalanan wisata, study tour, dan kunjungan kedinasan Anda kepada ASM Transport Kebumen. Kami siap memberikan pelayanan terbaik.
+                    </p>
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('main.booking') }}" class="btn-asm-primary text-center">
+                            Formulir Pemesanan Bus
+                        </a>
+                        <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Halo%20Admin%20ASM%20Transport,%20saya%20ingin%20berkonsultasi%20rute%20perjalanan." target="_blank" class="btn-asm-whatsapp justify-content-center">
+                            <i class="fa-brands fa-whatsapp"></i> Hubungi WhatsApp Kami
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

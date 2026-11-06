@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulir Permintaan Pemesanan Bus{% endblock %}
+{% block meta_description %}Formulir online pemesanan sewa bus pariwisata ASM Transport Kebumen. Dapatkan penawaran harga terbaik dan konfirmasi ketersediaan unit instan.{% endblock %}
+
+{% block content %}
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Formulir Pemesanan Bus</h1>
+        <p class="text-white-50 max-w-600 mx-auto mb-0">Isi Formulir di Bawah untuk Mengajukan Reservasi Bus Pariwisata ASM Transport Kebumen</p>
+        <nav aria-label="breadcrumb" class="mt-3">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Beranda</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Formulir Pemesanan</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- BOOKING FORM SECTION -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Left: Main Form -->
+            <div class="col-lg-8">
+                <div class="asm-form-card">
+                    <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
+                        <div>
+                            <span class="section-tag mb-1">Reservasi Cepat & Aman</span>
+                            <h3 class="fw-bold text-navy mb-0">Data Permintaan Sewa Bus</h3>
+                        </div>
+                        <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-semibold small">
+                            <i class="fa-solid fa-bolt me-1"></i> Respon Instan
+                        </span>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('main.booking') }}" novalidate>
+                        {{ form.hidden_tag() }}
+
+                        <!-- Data Pemesan -->
+                        <h5 class="fw-bold text-navy mb-3"><i class="fa-solid fa-user text-orange me-2"></i> 1. Informasi Pemesan</h5>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                {{ form.customer_name.label(class="form-label") }} <span class="text-danger">*</span>
+                                {{ form.customer_name(class="form-control" + (" is-invalid" if form.customer_name.errors else ""), placeholder="Contoh: Bpk. Ahmad Fauzi") }}
+                                {% for error in form.customer_name.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.customer_phone.label(class="form-label") }} <span class="text-danger">*</span>
+                                {{ form.customer_phone(class="form-control" + (" is-invalid" if form.customer_phone.errors else ""), placeholder="Contoh: 08123456789 (WhatsApp Aktif)") }}
+                                <small class="text-muted" style="font-size: 0.75rem;">Kami akan mengirimkan rincian penawaran ke nomor WhatsApp ini.</small>
+                                {% for error in form.customer_phone.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-12">
+                                {{ form.customer_email.label(class="form-label") }}
+                                {{ form.customer_email(class="form-control" + (" is-invalid" if form.customer_email.errors else ""), placeholder="alamat.email@contoh.com") }}
+                                {% for error in form.customer_email.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Detail Perjalanan -->
+                        <h5 class="fw-bold text-navy mb-3 pt-3 border-top"><i class="fa-solid fa-bus text-orange me-2"></i> 2. Rincian Perjalanan & Pilihan Bus</h5>
+                        <div class="row g-3 mb-4">
+                            <div class="col-12">
+                                {{ form.fleet_id.label(class="form-label") }}
+                                {{ form.fleet_id(class="form-select" + (" is-invalid" if form.fleet_id.errors else "")) }}
+                                <small class="text-muted" style="font-size: 0.75rem;">Bila belum yakin dengan jenis bus, pilih opsi konsultasi admin.</small>
+                                {% for error in form.fleet_id.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.departure_date.label(class="form-label") }} <span class="text-danger">*</span>
+                                {{ form.departure_date(class="form-control" + (" is-invalid" if form.departure_date.errors else ""), id="departure_date", type="date") }}
+                                {% for error in form.departure_date.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.return_date.label(class="form-label") }} <span class="text-danger">*</span>
+                                {{ form.return_date(class="form-control" + (" is-invalid" if form.return_date.errors else ""), id="return_date", type="date") }}
+                                {% for error in form.return_date.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Duration indicator badge -->
+                            <div class="col-12">
+                                <div id="durationBadge" class="p-2 px-3 rounded-3 small fw-semibold d-none"></div>
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.pickup_location.label(class="form-label") }} <span class="text-danger">*</span>
+                                {{ form.pickup_location(class="form-control" + (" is-invalid" if form.pickup_location.errors else ""), placeholder="Contoh: Alun-Alun Kebumen / Nama Sekolah") }}
+                                {% for error in form.pickup_location.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.destination.label(class="form-label") }} <span class="text-danger">*</span>
+                                {{ form.destination(class="form-control" + (" is-invalid" if form.destination.errors else ""), placeholder="Contoh: Yogyakarta & Pantai Parangtritis") }}
+                                {% for error in form.destination.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.bus_count.label(class="form-label") }} <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-bus text-orange"></i></span>
+                                    {{ form.bus_count(class="form-control" + (" is-invalid" if form.bus_count.errors else ""), min="1", max="50", placeholder="1") }}
+                                    <span class="input-group-text bg-light text-muted">Unit Bus</span>
+                                </div>
+                                <small class="text-muted" style="font-size: 0.75rem;">Jumlah bus yang ingin Anda sewa.</small>
+                                {% for error in form.bus_count.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-md-6">
+                                {{ form.passenger_count.label(class="form-label") }} <span class="text-danger">*</span>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-users text-orange"></i></span>
+                                    {{ form.passenger_count(class="form-control" + (" is-invalid" if form.passenger_count.errors else ""), placeholder="Contoh: 45") }}
+                                    <span class="input-group-text bg-light text-muted">Orang</span>
+                                </div>
+                                <small class="text-muted" style="font-size: 0.75rem;">Total perkiraan seluruh peserta rombongan.</small>
+                                {% for error in form.passenger_count.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-12">
+                                {{ form.special_requests.label(class="form-label") }}
+                                {{ form.special_requests(class="form-control", rows="3", placeholder="Tuliskan permintaan khusus seperti rute mampir ziarah, penyediaan bantal selimut, atau fasilitas lainnya...") }}
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-top">
+                            <button type="submit" class="btn-asm-primary w-100 py-3 fs-6">
+                                <i class="fa-solid fa-paper-plane me-2"></i> Kirim Permintaan Pemesanan
+                            </button>
+                            <p class="text-muted small text-center mt-3 mb-0">
+                                <i class="fa-solid fa-lock text-success me-1"></i> Data Anda aman bersama kami dan hanya digunakan untuk keperluan konfirmasi reservasi bus.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right: Information & FAQ Sidebar -->
+            <div class="col-lg-4">
+                <div class="p-4 bg-light-surface rounded-4 border mb-4">
+                    <h5 class="fw-bold text-navy mb-3"><i class="fa-solid fa-circle-question text-orange me-2"></i> Panduan Reservasi</h5>
+                    <ul class="text-muted small ps-3 mb-0" style="line-height: 1.8;">
+                        <li class="mb-2">Setelah formulir dikirim, sistem akan menerbitkan <strong>Kode Booking Resmi</strong>.</li>
+                        <li class="mb-2">Anda dapat langsung mengonfirmasi kode tersebut ke WhatsApp Admin dengan satu kali klik.</li>
+                        <li class="mb-2">Admin akan memeriksa jadwal unit armada dan mengirimkan surat penawaran harga resmi (Invoice/MoU).</li>
+                        <li>Penguncian tanggal armada berlaku setelah pembayaran Uang Muka (DP) disepakati.</li>
+                    </ul>
+                </div>
+
+                <div class="p-4 bg-navy text-white rounded-4 shadow-sm text-center">
+                    <div class="fs-1 text-orange mb-2"><i class="fa-brands fa-whatsapp"></i></div>
+                    <h5 class="text-white fw-bold mb-2">Ingin Konsultasi Langsung?</h5>
+                    <p class="text-white-50 small mb-3">
+                        Lebih nyaman berbicara langsung dengan admin? Hubungi customer service WhatsApp kami sekarang.
+                    </p>
+                    <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Halo%20Admin%20ASM%20Transport,%20saya%20ingin%20tanya%20sewa%20bus%20secara%20langsung." target="_blank" class="btn btn-success fw-bold w-100 py-2">
+                        <i class="fa-brands fa-whatsapp me-1"></i> Chat WhatsApp (24 Jam)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

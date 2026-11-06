@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Layanan Transportasi Bus Pariwisata{% endblock %}
+{% block meta_description %}Layanan sewa bus pariwisata terpercaya dari ASM Transport Kebumen. Melayani paket wisata umum, study tour, ziarah wali, dinas korporat, dan antar jemput bandara.{% endblock %}
+
+{% block content %}
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Layanan Transportasi Kami</h1>
+        <p class="text-white-50 max-w-600 mx-auto mb-0">Solusi Perjalanan Aman, Nyaman, dan Fleksibel untuk Segala Kebutuhan Mobilitas Rombongan Anda</p>
+        <nav aria-label="breadcrumb" class="mt-3">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">Beranda</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Layanan</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- SERVICES LIST SECTION -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-lg-6">
+                <div class="p-4 p-md-5 rounded-4 border bg-white shadow-sm h-100 d-flex flex-column hover-shadow transition">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="service-icon-circle mb-0" style="width: 54px; height: 54px; font-size: 1.4rem;">
+                            <i class="{{ service.icon }}"></i>
+                        </div>
+                        <div>
+                            <span class="badge-corporate bg-orange-soft">Layanan Resmi</span>
+                            <h3 class="fw-bold text-navy mb-0 fs-4">{{ service.title }}</h3>
+                        </div>
+                    </div>
+
+                    <p class="text-muted fw-medium mb-3">
+                        {{ service.short_description }}
+                    </p>
+
+                    {% if service.full_description %}
+                    <p class="text-muted small mb-4 flex-grow-1" style="line-height: 1.7;">
+                        {{ service.full_description }}
+                    </p>
+                    {% endif %}
+
+                    {% if service.image %}
+                    <div class="rounded-3 overflow-hidden mb-3" style="height: 160px;">
+                        <img src="{{ url_for('static', filename=service.image) }}" alt="{{ service.title }}" class="w-100 h-100 object-fit-cover">
+                    </div>
+                    {% endif %}
+
+                    <div class="d-flex flex-wrap gap-2 pt-3 border-top mt-auto">
+                        <a href="{{ url_for('main.booking') }}" class="btn btn-sm btn-asm-primary">
+                            <i class="fa-solid fa-calendar-check me-1"></i> Pesan Layanan Ini
+                        </a>
+                        <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Halo%20Admin%20ASM%20Transport,%20saya%20ingin%20konsultasi%20mengenai%20layanan%20*{{ service.title|urlencode }}*." target="_blank" class="btn btn-sm btn-outline-success border-2 fw-semibold">
+                            <i class="fa-brands fa-whatsapp me-1"></i> Tanya via WA
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- HOW TO BOOK / CARA SEWA -->
+<section class="section-padding bg-light-surface border-top">
+    <div class="container text-center mb-5">
+        <span class="section-tag">Mudah & Transparan</span>
+        <h2 class="section-title">4 Langkah Mudah Menyewa Bus di ASM Transport</h2>
+        <p class="section-desc">Proses reservasi armada kami rancang simpel dan cepat agar persiapan liburan Anda berjalan lancar.</p>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-white rounded-4 border text-center h-100">
+                    <div class="rounded-circle bg-navy text-orange fs-4 fw-bold mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        1
+                    </div>
+                    <h5 class="fw-bold text-navy">Pilih Armada & Tanggal</h5>
+                    <p class="text-muted small mb-0">Tentukan jumlah tempat duduk, rute tujuan, serta tanggal keberangkatan rombongan Anda.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-white rounded-4 border text-center h-100">
+                    <div class="rounded-circle bg-navy text-orange fs-4 fw-bold mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        2
+                    </div>
+                    <h5 class="fw-bold text-navy">Kirim Permintaan Online</h5>
+                    <p class="text-muted small mb-0">Isi formulir pemesanan online atau hubungi admin kami secara langsung melalui WhatsApp.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-white rounded-4 border text-center h-100">
+                    <div class="rounded-circle bg-navy text-orange fs-4 fw-bold mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        3
+                    </div>
+                    <h5 class="fw-bold text-navy">Konfirmasi & Uang Muka</h5>
+                    <p class="text-muted small mb-0">Admin mengonfirmasi ketersediaan bus, rincian biaya sewa, dan penguncian jadwal armada (DP).</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="p-4 bg-white rounded-4 border text-center h-100">
+                    <div class="rounded-circle bg-navy text-orange fs-4 fw-bold mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        4
+                    </div>
+                    <h5 class="fw-bold text-navy">Bus Siap Menjemput</h5>
+                    <p class="text-muted small mb-0">Armada beserta kru pengemudi siap di lokasi titik penjemputan sesuai kesepakatan waktu.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{{ url_for('main.booking') }}" class="btn-asm-primary px-5 py-3 fs-6">
+                Mulai Isi Formulir Pemesanan Sekarang <i class="fa-solid fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

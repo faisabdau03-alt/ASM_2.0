@@ -1,0 +1,77 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Kelola Galeri Foto{% endblock %}
+{% block header_title %}Manajemen Galeri & Dokumentasi Perjalanan{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+    <div>
+        <h4 class="fw-bold text-navy mb-1">Daftar Foto Galeri Dokumentasi</h4>
+        <p class="text-muted small mb-0">Kelola foto armada, interior, momen perjalanan wisata rombongan, dan kru ASM Transport.</p>
+    </div>
+    <a href="{{ url_for('admin.gallery_create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
+        <i class="fa-solid fa-upload"></i> Unggah Foto Baru
+    </a>
+</div>
+
+<!-- Filters -->
+<div class="admin-card mb-4">
+    <div class="admin-card-body p-3">
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('admin.galleries_list') }}" 
+               class="btn btn-sm {% if not current_category %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                Semua Kategori
+            </a>
+            {% for cat in categories %}
+            <a href="{{ url_for('admin.galleries_list', kategori=cat) }}" 
+               class="btn btn-sm {% if current_category == cat %}btn-primary{% else %}btn-outline-secondary{% endif %}">
+                {{ cat }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Gallery Grid in Admin -->
+<div class="row g-3">
+    {% for g in galleries %}
+    <div class="col-sm-6 col-md-4 col-xl-3">
+        <div class="admin-card h-100 overflow-hidden mb-0 d-flex flex-column">
+            <div class="position-relative" style="height: 180px;">
+                <img src="{{ url_for('static', filename=g.image_file) }}" alt="{{ g.title }}" class="w-100 h-100 object-fit-cover">
+                <span class="position-absolute top-0 start-0 m-2 badge bg-navy">{{ g.category }}</span>
+                {% if g.is_featured %}
+                <span class="position-absolute top-0 end-0 m-2 badge bg-warning text-dark"><i class="fa-solid fa-star"></i> Beranda</span>
+                {% endif %}
+            </div>
+            <div class="p-3 d-flex flex-column flex-grow-1">
+                <h6 class="fw-bold text-navy mb-1 text-truncate">{{ g.title }}</h6>
+                <small class="text-muted mb-3 flex-grow-1" style="font-size: 0.78rem;">{{ g.caption or '-' }}</small>
+                
+                <div class="d-flex justify-content-between align-items-center pt-2 border-top mt-auto">
+                    <small class="text-muted">{{ g.created_at.strftime('%d/%m/%Y') }}</small>
+                    <div class="d-inline-flex gap-1">
+                        <a href="{{ url_for('admin.gallery_edit', id=g.id) }}" class="btn-action-icon edit" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <form method="POST" action="{{ url_for('admin.gallery_delete', id=g.id) }}" class="d-inline form-delete-confirm" data-confirm-message="Hapus foto '{{ g.title }}'?">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="btn-action-icon delete" title="Hapus Foto">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="admin-card text-center py-5 text-muted">
+            Belum ada foto galeri yang diunggah.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

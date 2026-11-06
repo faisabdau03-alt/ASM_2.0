@@ -1,0 +1,428 @@
+{% extends 'base.html' %}
+
+{% block title %}Beranda | Sewa Bus Pariwisata Kebumen{% endblock %}
+
+{% block content %}
+<!-- =========================================================
+     HERO SECTION
+     ========================================================= -->
+<section class="hero-section">
+    <div class="container position-relative z-2">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <div class="hero-badge">
+                    <i class="fa-solid fa-award"></i> PO ALULA SADIDA MARYAM - KEBUMEN
+                </div>
+                <h1 class="hero-title">
+                    {{ site_settings.tagline }}
+                </h1>
+                <p class="hero-subtitle">
+                    Penyedia layanan sewa bus pariwisata profesional terpercaya di Kebumen. Siap melayani perjalanan wisata, study tour, ziarah wali, kunjungan dinas, dan hajatan keluarga dengan standar armada prima dan kru berdedikasi.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('main.booking') }}" class="btn-asm-primary">
+                        <i class="fa-solid fa-calendar-check"></i> Pesan Bus Sekarang
+                    </a>
+                    <a href="{{ url_for('main.fleets') }}" class="btn-asm-outline">
+                        <i class="fa-solid fa-bus"></i> Lihat Katalog Armada
+                    </a>
+                </div>
+
+                <!-- Hero quick highlights -->
+                <div class="hero-features">
+                    <div class="hero-feature-item">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Armada Prima & Bersih</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span>Kru Sopir Berpengalaman</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Harga Transparan & Fleksibel</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Booking Inquiry Box on Hero -->
+            <div class="col-lg-5">
+                <div class="hero-booking-card">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h3 class="mb-0">Cek Jadwal & Sewa Bus</h3>
+                        <span class="badge-corporate bg-orange-soft">Respon Cepat</span>
+                    </div>
+                    <p class="text-muted small mb-4">
+                        Dapatkan penawaran harga terbaik untuk rute perjalanan wisata atau kedinasan Anda.
+                    </p>
+
+                    <form action="{{ url_for('main.booking') }}" method="GET">
+                        <div class="mb-3">
+                            <label class="form-label small">Pilih Kategori Bus</label>
+                            <select name="kategori" class="form-select">
+                                <option value="">Semua Kategori Bus</option>
+                                <option value="Big Bus">Big Bus (45 - 59 Seats)</option>
+                                <option value="Medium Bus">Medium Bus (30 - 35 Seats)</option>
+                                <option value="Executive Bus">Executive Bus (28 - 32 Seats)</option>
+                                <option value="HiAce / Minibus">HiAce / Minibus (14 - 19 Seats)</option>
+                            </select>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="form-label small">Titik Jemput</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="Contoh: Kebumen" value="Kebumen" readonly>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small">Kota Tujuan</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="Contoh: Jogja / Bali">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-asm-primary w-100">
+                                <i class="fa-solid fa-magnifying-glass me-1"></i> Mulai Formulir Reservasi
+                            </button>
+                            <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Halo%20Admin%20ASM%20Transport,%20saya%20ingin%20tanya%20ketersediaan%20bus%20untuk%20perjalanan%20wisata." target="_blank" class="btn btn-outline-success border-2 fw-semibold">
+                                <i class="fa-brands fa-whatsapp me-1"></i> Tanya Admin via WhatsApp
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     PENGENALAN PERUSAHAAN (COMPANY INTRODUCTION)
+     ========================================================= -->
+<section class="section-padding bg-light-surface">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="{{ url_for('static', filename='images/hero-bus.jpg') }}" alt="Armada ASM Transport Kebumen" class="rounded-4 shadow-lg w-100" style="height: 380px; object-fit: cover;">
+                    <div class="position-absolute bottom-0 start-0 m-4 bg-navy p-3 rounded-3 text-white shadow-lg d-none d-sm-block">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="fs-1 text-orange"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            <div>
+                                <h4 class="text-white mb-0 fw-bold">Siap 24 Jam</h4>
+                                <small class="text-white-50">Pelayanan & Darurat di Jalan</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <span class="section-tag">Tentang ASM Transport</span>
+                <h2 class="section-title">PO Alula Sadida Maryam: Sahabat Perjalanan Terbaik Anda</h2>
+                <p class="text-muted mb-3">
+                    <strong>ASM Transport Kebumen</strong> (PO Alula Sadida Maryam) hadir untuk memberikan standar baru transportasi bus pariwisata di Kabupaten Kebumen dan sekitarnya. Kami memadukan unit bus terawat, pengemudi beretika dan berpengalaman, serta harga sewa yang bersahabat.
+                </p>
+                <p class="text-muted mb-4">
+                    Kenyamanan dan keselamatan penumpang adalah prioritas tertinggi kami. Setiap armada melalui perawatan rutin dan pengecekan berkala sebelum keberangkatan, sehingga perjalanan Anda menuju berbagai destinasi di Pulau Jawa, Bali, dan Lombok berlangsung lancar tanpa rasa khawatir.
+                </p>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-orange-soft p-3 text-orange fs-4"><i class="fa-solid fa-bus"></i></div>
+                            <div>
+                                <h5 class="mb-0 fw-bold text-navy">{{ fleets_count }} Unit</h5>
+                                <small class="text-muted">Armada Bus Beroperasi</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-orange-soft p-3 text-orange fs-4"><i class="fa-solid fa-map-location-dot"></i></div>
+                            <div>
+                                <h5 class="mb-0 fw-bold text-navy">{{ completed_trips }}+ Trip</h5>
+                                <small class="text-muted">Perjalanan Sukses Terlaksana</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ url_for('main.about') }}" class="btn-asm-navy">
+                    Pelajari Selengkapnya Tentang Kami <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     ARMADA UNGGULAN (FEATURED FLEETS)
+     ========================================================= -->
+<section class="section-padding">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+            <div>
+                <span class="section-tag">Katalog Pilihan</span>
+                <h2 class="section-title mb-0">Armada Unggulan ASM Transport</h2>
+            </div>
+            <div class="mt-3 mt-md-0">
+                <a href="{{ url_for('main.fleets') }}" class="btn btn-outline-dark px-4 py-2 rounded-pill fw-semibold">
+                    Lihat Semua Armada ({{ fleets_count }}) <i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for fleet in featured_fleets %}
+            <div class="col-lg-6 col-xl-3 col-md-6">
+                <div class="fleet-card">
+                    <div class="fleet-img-wrap">
+                        <img src="{{ url_for('static', filename=fleet.main_image) }}" alt="{{ fleet.name }}" loading="lazy">
+                        <span class="fleet-category-badge">{{ fleet.category }}</span>
+                        <span class="fleet-capacity-badge"><i class="fa-solid fa-users me-1"></i> {{ fleet.seat_capacity }} Seats</span>
+                    </div>
+                    <div class="fleet-card-body">
+                        <h4 class="fleet-card-title">{{ fleet.name }}</h4>
+                        
+                        <div class="fleet-specs-grid">
+                            <div class="fleet-specs-item">
+                                <i class="fa-solid fa-chair"></i>
+                                <span>Konfigurasi {{ fleet.seat_configuration }}</span>
+                            </div>
+                            <div class="fleet-specs-item">
+                                <i class="fa-solid fa-gears"></i>
+                                <span>{{ fleet.transmission }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Facilities preview -->
+                        <div class="fleet-facilities-tags">
+                            {% for fac in fleet.facilities_list[:3] %}
+                                <span class="facility-tag"><i class="fa-solid fa-check text-orange me-1"></i>{{ fac }}</span>
+                            {% endfor %}
+                            {% if fleet.facilities_list|length > 3 %}
+                                <span class="facility-tag text-muted">+{{ fleet.facilities_list|length - 3 }} Lainnya</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="fleet-card-footer">
+                            <a href="{{ url_for('main.fleet_detail', slug=fleet.slug) }}" class="btn btn-sm btn-outline-secondary fw-semibold">
+                                Detail Bus
+                            </a>
+                            <a href="{{ url_for('main.booking', fleet_id=fleet.id) }}" class="btn btn-sm btn-asm-primary">
+                                Pesan Bus <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     INFORMASI LAYANAN (SERVICES)
+     ========================================================= -->
+<section class="section-padding bg-light-surface">
+    <div class="container text-center mb-5">
+        <span class="section-tag">Solusi Perjalanan</span>
+        <h2 class="section-title">Layanan Transportasi Bus Terlengkap</h2>
+        <p class="section-desc">
+            Melayani berbagai kebutuhan mobilitas rombongan dengan pelayanan prima dan rute perjalanan fleksibel.
+        </p>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6">
+                <div class="service-box">
+                    <div class="service-icon-circle">
+                        <i class="{{ service.icon }}"></i>
+                    </div>
+                    <h3 class="service-title">{{ service.title }}</h3>
+                    <p class="text-muted mb-0 small" style="line-height: 1.65;">
+                        {{ service.short_description }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{{ url_for('main.services') }}" class="btn-asm-navy">
+                Lihat Seluruh Detail Layanan <i class="fa-solid fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     KEUNGGULAN ASM TRANSPORT (ADVANTAGES)
+     ========================================================= -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="section-tag">Mengapa Memilih Kami?</span>
+                <h2 class="section-title">Komitmen Keamanan & Kenyamanan Terbaik di Setiap Kilometer</h2>
+                <p class="text-muted mb-4">
+                    Kami memahami bahwa liburan dan perjalanan rombongan adalah momen berharga yang tak tergantikan. Oleh karena itu, ASM Transport selalu berpegang teguh pada empat pilar keunggulan:
+                </p>
+
+                <div class="advantage-item">
+                    <div class="adv-icon-wrap"><i class="fa-solid fa-shield-virus"></i></div>
+                    <div>
+                        <h5 class="fw-bold text-navy mb-1">Armada Bersih, Higienis & Terawat</h5>
+                        <p class="text-muted small mb-0">Setiap bus selalu dibersihkan dan dicek mesinnya secara menyeluruh sebelum dan sesudah beroperasi demi kenyamanan penumpang.</p>
+                    </div>
+                </div>
+
+                <div class="advantage-item">
+                    <div class="adv-icon-wrap"><i class="fa-solid fa-id-card-clip"></i></div>
+                    <div>
+                        <h5 class="fw-bold text-navy mb-1">Kru & Sopir Berpengalaman Ramah</h5>
+                        <p class="text-muted small mb-0">Pengemudi kami memiliki lisensi resmi, jam terbang tinggi di rute antar-provinsi, serta mengutamakan keselamatan dan etika sopan santun.</p>
+                    </div>
+                </div>
+
+                <div class="advantage-item">
+                    <div class="adv-icon-wrap"><i class="fa-solid fa-couch"></i></div>
+                    <div>
+                        <h5 class="fw-bold text-navy mb-1">Fasilitas Hiburan & Kenyamanan Lengkap</h5>
+                        <p class="text-muted small mb-0">Audio karaoke, TV monitor, reclining seat, charger HP, hingga selimut lembut membuat perjalanan panjang terasa menyenangkan.</p>
+                    </div>
+                </div>
+
+                <div class="advantage-item">
+                    <div class="adv-icon-wrap"><i class="fa-solid fa-handshake-angle"></i></div>
+                    <div>
+                        <h5 class="fw-bold text-navy mb-1">Kemudahan Konsultasi & Pemesanan Online</h5>
+                        <p class="text-muted small mb-0">Admin kami siap membantu perhitungan rute, estimasi biaya sewa, hingga rekomendasi armada yang paling efisien untuk rombongan Anda.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <img src="{{ url_for('static', filename='images/bus-executive.jpg') }}" alt="Kabin Bus" class="rounded-4 shadow-sm w-100 mb-3" style="height: 220px; object-fit: cover;">
+                        <img src="{{ url_for('static', filename='images/Yogya.png') }}" alt="Wisata Jogja" class="rounded-4 shadow-sm w-100" style="height: 180px; object-fit: cover;">
+                    </div>
+                    <div class="col-6 pt-4">
+                        <img src="{{ url_for('static', filename='images/Bali.png') }}" alt="Wisata Bali" class="rounded-4 shadow-sm w-100 mb-3" style="height: 180px; object-fit: cover;">
+                        <img src="{{ url_for('static', filename='images/bus-big.jpg') }}" alt="Big Bus ASM" class="rounded-4 shadow-sm w-100" style="height: 220px; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     PRATINJAU GALERI (GALLERY PREVIEW)
+     ========================================================= -->
+<section class="section-padding bg-light-surface">
+    <div class="container text-center mb-5">
+        <span class="section-tag">Dokumentasi Perjalanan</span>
+        <h2 class="section-title">Galeri Momen & Armada ASM Transport</h2>
+        <p class="section-desc">Koleksi foto armada bus pariwisata dan dokumentasi perjalanan wisata rombongan pelanggan kami.</p>
+    </div>
+
+    <div class="container">
+        <div class="row g-3">
+            {% for item in galleries %}
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="gallery-tile" 
+                     data-img="{{ url_for('static', filename=item.image_file) }}"
+                     data-title="{{ item.title }}"
+                     data-caption="{{ item.caption or '' }}">
+                    <img src="{{ url_for('static', filename=item.image_file) }}" alt="{{ item.title }}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="gallery-category-pill">{{ item.category }}</span>
+                        <h6 class="mb-0 text-white fw-bold">{{ item.title }}</h6>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{{ url_for('main.gallery') }}" class="btn btn-outline-dark px-4 py-2 rounded-pill fw-semibold">
+                Lihat Galeri Lengkap <i class="fa-solid fa-images ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     TESTIMONI PELANGGAN (TESTIMONIALS)
+     ========================================================= -->
+<section class="section-padding">
+    <div class="container text-center mb-5">
+        <span class="section-tag">Ulasan Jujur</span>
+        <h2 class="section-title">Apa Kata Mereka Tentang ASM Transport?</h2>
+        <p class="section-desc">Kepuasan pelanggan adalah bukti nyata dari dedikasi dan profesionalisme pelayanan kami.</p>
+    </div>
+
+    <div class="container">
+        <div class="row g-4">
+            {% for item in testimonials %}
+            <div class="col-lg-3 col-md-6">
+                <div class="testimonial-card">
+                    <div class="testi-stars">
+                        {% for i in range(item.rating) %}
+                            <i class="fa-solid fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <p class="testi-quote">
+                        "{{ item.content }}"
+                    </p>
+                    <div class="testi-author">
+                        {% if item.avatar_image %}
+                            <img src="{{ url_for('static', filename=item.avatar_image) }}" alt="{{ item.customer_name }}" class="testi-avatar">
+                        {% else %}
+                            <div class="testi-avatar-placeholder">
+                                {{ item.customer_name[0] }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <div class="testi-name">{{ item.customer_name }}</div>
+                            <div class="testi-org">{{ item.customer_role_or_org or 'Pelanggan Setia' }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     CALL TO ACTION (CTA) SECTION
+     ========================================================= -->
+<section class="bg-navy py-5 text-white">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="badge-corporate bg-orange-soft mb-3">Reservasi Mudah & Praktis</span>
+                <h2 class="text-white fw-bold mb-2">Rencanakan Perjalanan Wisata Anda Sekarang!</h2>
+                <p class="text-white-50 mb-0 fs-5">
+                    Konsultasikan kebutuhan armada bus, rute perjalanan, dan penawaran harga spesial langsung dengan tim kami.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <div class="d-flex flex-column flex-sm-row justify-content-lg-end gap-3">
+                    <a href="{{ url_for('main.booking') }}" class="btn-asm-primary">
+                        <i class="fa-solid fa-calendar-check"></i> Formulir Sewa
+                    </a>
+                    <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Halo%20Admin%20ASM%20Transport,%20saya%20ingin%20konsultasi%20pemesanan%20bus%20pariwisata." target="_blank" class="btn-asm-whatsapp">
+                        <i class="fa-brands fa-whatsapp"></i> Hubungi WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

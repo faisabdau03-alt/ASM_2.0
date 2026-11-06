@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}ASM Transport Kebumen{% endblock %} | Bus Pariwisata Kebumen</title>
+    <meta name="description" content="{% block meta_description %}Sewa Bus Pariwisata Kebumen terpercaya, aman, dan nyaman bersama ASM Transport (PO Alula Sadida Maryam). Melayani wisata, study tour, ziarah, dan dinas.{% endblock %}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Custom Corporate Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar d-none d-lg-block">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-4">
+                    <span><i class="fa-solid fa-location-dot text-orange me-2"></i> Kebumen, Jawa Tengah</span>
+                    <span><i class="fa-solid fa-clock text-orange me-2"></i> Pelayanan Reservasi 24 Jam</span>
+                    <span><i class="fa-solid fa-phone text-orange me-2"></i> {{ site_settings.office_phone }}</span>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-white-50">Ikuti Kami:</span>
+                    <a href="{{ site_settings.instagram_url }}" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="{{ site_settings.facebook_url }}" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="{{ site_settings.tiktok_url }}" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                    <span class="text-white-50 ms-2">|</span>
+                    <a href="{{ url_for('auth.login') }}" class="text-white-50 hover-orange ms-2" title="Admin Login"><i class="fa-solid fa-lock me-1"></i> Portal Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg asm-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo ASM Transport" class="brand-logo-img">
+                <div class="brand-text-wrap">
+                    <span class="brand-name">ASM <span>TRANSPORT</span></span>
+                    <small class="brand-sub">PO ALULA SADIDA MARYAM</small>
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#asmNavbarNav" aria-controls="asmNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars text-white fs-4"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="asmNavbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}" href="{{ url_for('main.index') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.about' %}active{% endif %}" href="{{ url_for('main.about') }}">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint in ['main.fleets', 'main.fleet_detail'] %}active{% endif %}" href="{{ url_for('main.fleets') }}">Armada Bus</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.services' %}active{% endif %}" href="{{ url_for('main.services') }}">Layanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.gallery' %}active{% endif %}" href="{{ url_for('main.gallery') }}">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.contact' %}active{% endif %}" href="{{ url_for('main.contact') }}">Kontak</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                        <a href="{{ url_for('main.booking') }}" class="btn-asm-primary w-100">
+                            <i class="fa-solid fa-calendar-check"></i> Pesan Bus
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FLASH MESSAGES -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                        {% if category == 'success' %}
+                            <i class="fa-solid fa-circle-check me-2"></i>
+                        {% elif category == 'danger' %}
+                            <i class="fa-solid fa-circle-exclamation me-2"></i>
+                        {% elif category == 'warning' %}
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        {% else %}
+                            <i class="fa-solid fa-circle-info me-2"></i>
+                        {% endif %}
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- MAIN BODY CONTENT -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/{{ site_settings.whatsapp_number }}?text=Halo%20Admin%20ASM%20Transport%20Kebumen,%20saya%20ingin%20konsultasi%20sewa%20bus%20pariwisata." 
+       target="_blank" 
+       class="floating-whatsapp"
+       title="Chat Admin via WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>Chat WhatsApp</span>
+    </a>
+
+    <!-- GALLERY LIGHTBOX MODAL -->
+    <div class="modal fade" id="galleryLightboxModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 rounded-4 overflow-hidden">
+                <div class="modal-body p-0 position-relative bg-black">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3 z-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <img id="lightboxImg" src="" alt="Gallery Preview" class="w-100" style="max-height: 80vh; object-fit: contain;">
+                    <div class="p-3 bg-dark text-white">
+                        <h5 id="lightboxTitle" class="text-white mb-1"></h5>
+                        <p id="lightboxCaption" class="text-white-50 mb-0 small"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CORPORATE FOOTER -->
+    <footer class="asm-footer">
+        <div class="container">
+            <div class="row g-4 g-lg-5">
+                <!-- Col 1: Brand Info -->
+                <div class="col-lg-4 col-md-6 footer-brand">
+                    <h4>ASM <span>TRANSPORT</span></h4>
+                    <p class="text-white-50 small mb-2">PO ALULA SADIDA MARYAM</p>
+                    <p class="text-light-50 pe-lg-3">
+                        {{ site_settings.about_summary }}
+                    </p>
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="{{ site_settings.instagram_url }}" target="_blank" class="social-pill" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="{{ site_settings.facebook_url }}" target="_blank" class="social-pill" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="{{ site_settings.tiktok_url }}" target="_blank" class="social-pill" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="{{ site_settings.youtube_url }}" target="_blank" class="social-pill" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Navigasi</h5>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('main.index') }}"><i class="fa-solid fa-angle-right"></i> Beranda</a></li>
+                        <li><a href="{{ url_for('main.about') }}"><i class="fa-solid fa-angle-right"></i> Profil Perusahaan</a></li>
+                        <li><a href="{{ url_for('main.fleets') }}"><i class="fa-solid fa-angle-right"></i> Katalog Armada</a></li>
+                        <li><a href="{{ url_for('main.services') }}"><i class="fa-solid fa-angle-right"></i> Layanan Sewa</a></li>
+                        <li><a href="{{ url_for('main.gallery') }}"><i class="fa-solid fa-angle-right"></i> Galeri Foto</a></li>
+                        <li><a href="{{ url_for('main.contact') }}"><i class="fa-solid fa-angle-right"></i> Kontak Kami</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Services -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Layanan Unggulan</h5>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('main.services') }}"><i class="fa-solid fa-bus text-orange"></i> Bus Pariwisata & Tour</a></li>
+                        <li><a href="{{ url_for('main.services') }}"><i class="fa-solid fa-graduation-cap text-orange"></i> Study Tour & KKL</a></li>
+                        <li><a href="{{ url_for('main.services') }}"><i class="fa-solid fa-mosque text-orange"></i> Ziarah Wali Religi</a></li>
+                        <li><a href="{{ url_for('main.services') }}"><i class="fa-solid fa-building text-orange"></i> Dinas & Kunjungan Kerja</a></li>
+                        <li><a href="{{ url_for('main.services') }}"><i class="fa-solid fa-plane-departure text-orange"></i> Antar Jemput Bandara</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Contact Kebumen -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-heading">Kantor & Kontak</h5>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>{{ site_settings.address }}</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>{{ site_settings.office_phone }}</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>+{{ site_settings.whatsapp_number }} (WhatsApp 24/7)</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>{{ site_settings.office_email }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div>
+                    &copy; {{ current_year }} <strong>ASM Transport Kebumen</strong> (PO Alula Sadida Maryam). Hak Cipta Dilindungi.
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge-demo">Contoh Data Demonstrasi</span>
+                    <a href="{{ url_for('auth.login') }}" class="text-white-50"><i class="fa-solid fa-lock me-1"></i> Admin Login</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Main JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+

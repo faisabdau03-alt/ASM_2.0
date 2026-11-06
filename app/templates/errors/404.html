@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Halaman Tidak Ditemukan (404){% endblock %}
+
+{% block content %}
+<section class="section-padding text-center py-5 my-5">
+    <div class="container py-5">
+        <div class="display-1 fw-bold text-navy mb-2">404</div>
+        <div class="fs-1 text-orange mb-3"><i class="fa-solid fa-compass-drafting"></i></div>
+        <h2 class="fw-bold text-navy mb-3">Halaman yang Anda Cari Tidak Ditemukan</h2>
+        <p class="text-muted max-w-600 mx-auto mb-4">
+            Mohon maaf, halaman atau rute yang Anda tuju mungkin telah dipindahkan, diubah namanya, atau sementara waktu tidak tersedia.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('main.index') }}" class="btn-asm-primary">
+                <i class="fa-solid fa-house me-1"></i> Kembali ke Beranda
+            </a>
+            <a href="{{ url_for('main.contact') }}" class="btn btn-outline-secondary">
+                <i class="fa-solid fa-phone me-1"></i> Kontak Bantuan
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

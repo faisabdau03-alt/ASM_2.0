@@ -1,0 +1,125 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{{ url_for('admin.fleets_list') }}" class="btn btn-sm btn-outline-secondary">
+        <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Daftar Armada
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <h5 class="admin-card-title"><i class="fa-solid fa-bus text-orange me-2"></i> {{ title }}</h5>
+            </div>
+            <div class="admin-card-body p-4">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-8">
+                            {{ form.name.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else ""), placeholder="Contoh: Jetbus 5 SHD Dream Coach - Alula 01") }}
+                            {% for error in form.name.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form.category.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.category(class="form-select" + (" is-invalid" if form.category.errors else "")) }}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form.seat_capacity.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.seat_capacity(class="form-control" + (" is-invalid" if form.seat_capacity.errors else ""), placeholder="Contoh: 50") }}
+                            {% for error in form.seat_capacity.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form.seat_configuration.label(class="form-label") }}
+                            {{ form.seat_configuration(class="form-control", placeholder="Contoh: 2-2 atau 2-1") }}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form.transmission.label(class="form-label") }}
+                            {{ form.transmission(class="form-control", placeholder="Contoh: Manual 6-Speed") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.chassis_engine.label(class="form-label") }}
+                            {{ form.chassis_engine(class="form-control", placeholder="Contoh: Mercedes-Benz OH 1626 / Hino RK8") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.price_estimate.label(class="form-label") }}
+                            {{ form.price_estimate(class="form-control", placeholder="Contoh: Mulai Rp 3.000.000 / Hari") }}
+                        </div>
+
+                        <div class="col-12">
+                            {{ form.facilities.label(class="form-label") }}
+                            {{ form.facilities(class="form-control", rows="3", placeholder="AC Dingin, Audio Karaoke, TV LED, Reclining Seat, USB Charger, Bantal & Selimut, Toilet, Bagasi Luas") }}
+                            <small class="text-muted">Pisahkan setiap fasilitas dengan tanda koma (,).</small>
+                        </div>
+
+                        <div class="col-12">
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control", rows="4", placeholder="Deskripsi lengkap mengenai kenyamanan bus, rute ideal, dan keunggulan unit...") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.main_image.label(class="form-label") }}
+                            {{ form.main_image(class="form-control image-preview-input", data_preview_target="busImagePreview") }}
+                            <small class="text-muted">Format didukung: JPG, PNG, WEBP (Maksimal 16MB).</small>
+
+                            <!-- Image Preview Area -->
+                            <div class="mt-2">
+                                <img id="busImagePreview" src="{% if fleet and fleet.main_image %}{{ url_for('static', filename=fleet.main_image) }}{% else %}#{% endif %}" 
+                                     alt="Preview Gambar" 
+                                     class="rounded-3 border {% if not (fleet and fleet.main_image) %}d-none{% endif %}" 
+                                     style="max-height: 140px; object-fit: cover;">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.status.label(class="form-label") }}
+                            {{ form.status(class="form-select") }}
+                        </div>
+
+                        <div class="col-12 pt-3 border-top">
+                            <div class="d-flex flex-wrap gap-4">
+                                <div class="form-check">
+                                    {{ form.is_featured(class="form-check-input", id="is_featured") }}
+                                    <label class="form-check-label fw-semibold" for="is_featured">
+                                        Tampilkan sebagai Armada Unggulan di Beranda
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    {{ form.is_active(class="form-check-input", id="is_active") }}
+                                    <label class="form-check-label fw-semibold" for="is_active">
+                                        Status Aktif (Tampilkan di Website Publik)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                        <a href="{{ url_for('admin.fleets_list') }}" class="btn btn-outline-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="fa-solid fa-save me-1"></i> Simpan Data Armada
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

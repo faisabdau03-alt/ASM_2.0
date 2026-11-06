@@ -1,0 +1,92 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{{ url_for('admin.services_list') }}" class="btn btn-sm btn-outline-secondary">
+        <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Daftar Layanan
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <h5 class="admin-card-title"><i class="fa-solid fa-route text-orange me-2"></i> {{ title }}</h5>
+            </div>
+            <div class="admin-card-body p-4">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-8">
+                            {{ form.title.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.title(class="form-control" + (" is-invalid" if form.title.errors else ""), placeholder="Contoh: Pariwisata & Study Tour") }}
+                            {% for error in form.title.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-4">
+                            {{ form.display_order.label(class="form-label") }}
+                            {{ form.display_order(class="form-control", placeholder="0") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.icon.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.icon(class="form-control" + (" is-invalid" if form.icon.errors else ""), placeholder="fa-solid fa-bus") }}
+                            <small class="text-muted">Gunakan class icon Font Awesome.</small>
+                            {% for error in form.icon.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.image.label(class="form-label") }}
+                            {{ form.image(class="form-control image-preview-input", data_preview_target="serviceImagePreview") }}
+                            <div class="mt-2">
+                                <img id="serviceImagePreview" src="{% if service and service.image %}{{ url_for('static', filename=service.image) }}{% else %}#{% endif %}" 
+                                     alt="Preview" 
+                                     class="rounded-3 border {% if not (service and service.image) %}d-none{% endif %}" 
+                                     style="max-height: 100px; object-fit: cover;">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            {{ form.short_description.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.short_description(class="form-control" + (" is-invalid" if form.short_description.errors else ""), rows="2", placeholder="Ringkasan singkat yang tampil di kartu layanan...") }}
+                            {% for error in form.short_description.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12">
+                            {{ form.full_description.label(class="form-label") }}
+                            {{ form.full_description(class="form-control", rows="4", placeholder="Deskripsi lengkap mengenai cakupan layanan, rute, dan fasilitas pendukung...") }}
+                        </div>
+
+                        <div class="col-12 pt-3 border-top">
+                            <div class="form-check">
+                                {{ form.is_active(class="form-check-input", id="is_active") }}
+                                <label class="form-check-label fw-semibold" for="is_active">
+                                    Status Aktif (Tampilkan di Website)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                        <a href="{{ url_for('admin.services_list') }}" class="btn btn-outline-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="fa-solid fa-save me-1"></i> Simpan Layanan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

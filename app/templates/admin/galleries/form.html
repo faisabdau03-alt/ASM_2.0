@@ -1,0 +1,77 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block header_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{{ url_for('admin.galleries_list') }}" class="btn btn-sm btn-outline-secondary">
+        <i class="fa-solid fa-arrow-left me-1"></i> Kembali ke Daftar Galeri
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <h5 class="admin-card-title"><i class="fa-solid fa-image text-orange me-2"></i> {{ title }}</h5>
+            </div>
+            <div class="admin-card-body p-4">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-12">
+                            {{ form.title.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.title(class="form-control" + (" is-invalid" if form.title.errors else ""), placeholder="Contoh: Unit Big Bus Siap Berangkat ke Bali") }}
+                            {% for error in form.title.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.category.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.category(class="form-select") }}
+                        </div>
+
+                        <div class="col-md-6">
+                            {{ form.image_file.label(class="form-label") }}
+                            {{ form.image_file(class="form-control image-preview-input", data_preview_target="galleryImagePreview") }}
+                            <small class="text-muted">Format: JPG, PNG, WEBP.</small>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <img id="galleryImagePreview" src="{% if gallery and gallery.image_file %}{{ url_for('static', filename=gallery.image_file) }}{% else %}#{% endif %}" 
+                                 alt="Preview" 
+                                 class="rounded-3 border {% if not (gallery and gallery.image_file) %}d-none{% endif %}" 
+                                 style="max-height: 200px; object-fit: contain;">
+                        </div>
+
+                        <div class="col-12">
+                            {{ form.caption.label(class="form-label") }}
+                            {{ form.caption(class="form-control", rows="3", placeholder="Keterangan singkat momen atau lokasi pengambilan gambar...") }}
+                        </div>
+
+                        <div class="col-12 pt-3 border-top">
+                            <div class="form-check">
+                                {{ form.is_featured(class="form-check-input", id="is_featured") }}
+                                <label class="form-check-label fw-semibold" for="is_featured">
+                                    Tampilkan di Pratinjau Galeri Halaman Beranda
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                        <a href="{{ url_for('admin.galleries_list') }}" class="btn btn-outline-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="fa-solid fa-save me-1"></i> Simpan Foto Galeri
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,90 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Pengaturan Website{% endblock %}
+{% block header_title %}Pengaturan Informasi & Kontak Website{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="admin-card">
+            <div class="admin-card-header">
+                <h5 class="admin-card-title"><i class="fa-solid fa-sliders text-orange me-2"></i> Pengaturan Informasi Publik & Kontak Perusahaan</h5>
+            </div>
+            <div class="admin-card-body p-4">
+                <form method="POST" action="{{ url_for('admin.settings') }}" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    <h6 class="fw-bold text-navy mb-3 pb-2 border-bottom"><i class="fa-solid fa-building text-primary me-2"></i> Identitas Perusahaan</h6>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            {{ form.company_name.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.company_name(class="form-control") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.tagline.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.tagline(class="form-control") }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.about_summary.label(class="form-label") }}
+                            {{ form.about_summary(class="form-control", rows="3") }}
+                            <small class="text-muted">Ringkasan singkat yang muncul pada footer dan perkenalan beranda.</small>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold text-navy mb-3 pb-2 border-bottom"><i class="fa-solid fa-address-book text-success me-2"></i> Kontak & Alamat Resmi</h6>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            {{ form.whatsapp_number.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.whatsapp_number(class="form-control", placeholder="62882005363151") }}
+                            <small class="text-muted">Gunakan format internasional tanpa spasi (awalan 62).</small>
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.office_phone.label(class="form-label") }}
+                            {{ form.office_phone(class="form-control", placeholder="(0287) 381-000") }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form.office_email.label(class="form-label") }}
+                            {{ form.office_email(class="form-control", placeholder="info@asmtransport.id") }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form.address.label(class="form-label") }} <span class="text-danger">*</span>
+                            {{ form.address(class="form-control", rows="2") }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form.operating_hours.label(class="form-label") }}
+                            {{ form.operating_hours(class="form-control") }}
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold text-navy mb-3 pb-2 border-bottom"><i class="fa-solid fa-share-nodes text-warning me-2"></i> Media Sosial</h6>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            {{ form.instagram_url.label(class="form-label") }}
+                            {{ form.instagram_url(class="form-control", placeholder="https://instagram.com/asmtransport_kebumen") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.facebook_url.label(class="form-label") }}
+                            {{ form.facebook_url(class="form-control", placeholder="https://facebook.com/...") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.tiktok_url.label(class="form-label") }}
+                            {{ form.tiktok_url(class="form-control", placeholder="https://tiktok.com/@...") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.youtube_url.label(class="form-label") }}
+                            {{ form.youtube_url(class="form-control", placeholder="https://youtube.com/@...") }}
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-top text-end">
+                        <button type="submit" class="btn btn-primary px-4 py-2">
+                            <i class="fa-solid fa-save me-1"></i> Simpan Seluruh Pengaturan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
