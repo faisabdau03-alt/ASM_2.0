@@ -11,11 +11,18 @@ def create_app(config_name=None):
     app = Flask(__name__)
     app.config.from_object(config.get(config_name, config['default']))
 
-    # Ensure instance and upload folders exist
-    os.makedirs(app.instance_path, exist_ok=True)
-    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-    for sub in ['fleets', 'services', 'galleries', 'testimonials']:
-        os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], sub), exist_ok=True)
+    # Ensure instance and upload folders exist safely
+    try:
+        os.makedirs(app.instance_path, exist_ok=True)
+    except OSError:
+        pass
+
+    try:
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        for sub in ['fleets', 'services', 'galleries', 'testimonials']:
+            os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], sub), exist_ok=True)
+    except OSError:
+        pass
 
     # Initialize extensions
     db.init_app(app)

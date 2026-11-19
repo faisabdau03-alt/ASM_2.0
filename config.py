@@ -9,13 +9,23 @@ class Config:
     """Base application configuration."""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'asm-secret-super-secure-key-v2-kebumen-transport-2026'
     
+    is_vercel = bool(os.environ.get('VERCEL'))
+
     # Database
-    db_path = os.path.join(basedir, 'instance', 'asm_transport.db')
+    if is_vercel and not os.environ.get('DATABASE_URL'):
+        db_path = '/tmp/asm_transport.db'
+    else:
+        db_path = os.path.join(basedir, 'instance', 'asm_transport.db')
+
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or f"sqlite:///{db_path}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Uploads
-    UPLOAD_FOLDER = os.path.join(basedir, 'app', 'static', 'uploads')
+    if is_vercel:
+        UPLOAD_FOLDER = '/tmp/uploads'
+    else:
+        UPLOAD_FOLDER = os.path.join(basedir, 'app', 'static', 'uploads')
+
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 Megabytes max
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 
