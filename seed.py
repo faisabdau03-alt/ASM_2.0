@@ -9,7 +9,8 @@ def _run_seed_process():
     # Create database tables if they do not exist
     db.create_all()
 
-    print("[1/7] Inisialisasi Akun Administrator...")
+    try:
+        print("[1/7] Inisialisasi Akun Administrator...")
         admin = User.query.filter_by(username='admin').first()
         if not admin:
             admin = User(
@@ -343,6 +344,9 @@ def _run_seed_process():
 
         db.session.commit()
         print("\n=== SEMUA DATA AWAL (SEED) BERHASIL DIINISIALISASI DENGAN SUKSES! ===")
+    except Exception as e:
+        db.session.rollback()
+        print(f"[SEED ERROR] {e}")
 
 
 def seed_data(target_app=None):
