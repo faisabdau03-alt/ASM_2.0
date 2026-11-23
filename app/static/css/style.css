@@ -214,9 +214,14 @@ img {
 }
 
 .brand-logo-img {
-    height: 48px;
+    height: 42px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.25s ease;
+}
+
+.navbar-brand:hover .brand-logo-img {
+    transform: scale(1.03);
 }
 
 .brand-text-wrap {
@@ -920,6 +925,15 @@ img {
 }
 
 @media (max-width: 575.98px) {
+    .brand-logo-img {
+        height: 34px;
+    }
+    .brand-name {
+        font-size: 1.05rem;
+    }
+    .brand-sub {
+        font-size: 0.58rem;
+    }
     .hero-title {
         font-size: 1.85rem;
     }
