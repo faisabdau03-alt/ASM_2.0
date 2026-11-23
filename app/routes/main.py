@@ -10,21 +10,37 @@ main_bp = Blueprint('main', __name__)
 
 @main_bp.app_context_processor
 def inject_global_data():
-    """Inject settings and helpers across all templates."""
-    settings_dict = {
-        'company_name': SiteSetting.get('company_name', 'ASM Transport Kebumen'),
-        'tagline': SiteSetting.get('tagline', 'Perjalanan Nyaman, Kenangan Berkesan'),
-        'whatsapp_number': SiteSetting.get('whatsapp_number', current_app.config.get('WHATSAPP_NUMBER', '62882005363151')),
-        'office_phone': SiteSetting.get('office_phone', '(0287) 381-000'),
-        'office_email': SiteSetting.get('office_email', 'info@asmtransport.id'),
-        'address': SiteSetting.get('address', 'Jl. Raya Kebumen - Purworejo KM. 5, Kebumen, Jawa Tengah 54311'),
-        'operating_hours': SiteSetting.get('operating_hours', 'Senin - Minggu: 24 Jam Pelayanan Reservasi'),
-        'about_summary': SiteSetting.get('about_summary', 'ASM Transport (PO Alula Sadida Maryam) adalah penyedia jasa transportasi bus pariwisata terpercaya yang berbasis di Kebumen, Jawa Tengah.'),
-        'instagram_url': SiteSetting.get('instagram_url', 'https://instagram.com/asmtransport_kebumen'),
-        'facebook_url': SiteSetting.get('facebook_url', 'https://facebook.com'),
-        'tiktok_url': SiteSetting.get('tiktok_url', 'https://tiktok.com'),
-        'youtube_url': SiteSetting.get('youtube_url', 'https://youtube.com'),
-    }
+    """Inject settings and helpers across all templates safely."""
+    try:
+        settings_dict = {
+            'company_name': SiteSetting.get('company_name', 'ASM Transport Kebumen'),
+            'tagline': SiteSetting.get('tagline', 'Perjalanan Nyaman, Kenangan Berkesan'),
+            'whatsapp_number': SiteSetting.get('whatsapp_number', current_app.config.get('WHATSAPP_NUMBER', '62882005363151')),
+            'office_phone': SiteSetting.get('office_phone', '(0287) 381-000'),
+            'office_email': SiteSetting.get('office_email', 'info@asmtransport.id'),
+            'address': SiteSetting.get('address', 'Jl. Raya Kebumen - Purworejo KM. 5, Kebumen, Jawa Tengah 54311'),
+            'operating_hours': SiteSetting.get('operating_hours', 'Senin - Minggu: 24 Jam Pelayanan Reservasi'),
+            'about_summary': SiteSetting.get('about_summary', 'ASM Transport (PO Alula Sadida Maryam) adalah penyedia jasa transportasi bus pariwisata terpercaya yang berbasis di Kebumen, Jawa Tengah.'),
+            'instagram_url': SiteSetting.get('instagram_url', 'https://instagram.com/asmtransport_kebumen'),
+            'facebook_url': SiteSetting.get('facebook_url', 'https://facebook.com'),
+            'tiktok_url': SiteSetting.get('tiktok_url', 'https://tiktok.com'),
+            'youtube_url': SiteSetting.get('youtube_url', 'https://youtube.com'),
+        }
+    except Exception:
+        settings_dict = {
+            'company_name': 'ASM Transport Kebumen',
+            'tagline': 'Perjalanan Nyaman, Kenangan Berkesan',
+            'whatsapp_number': '62882005363151',
+            'office_phone': '(0287) 381-000',
+            'office_email': 'info@asmtransport.id',
+            'address': 'Jl. Raya Kebumen - Purworejo KM. 5, Kebumen, Jawa Tengah 54311',
+            'operating_hours': 'Senin - Minggu: 24 Jam Pelayanan Reservasi',
+            'about_summary': 'ASM Transport (PO Alula Sadida Maryam) adalah penyedia jasa transportasi bus pariwisata terpercaya yang berbasis di Kebumen, Jawa Tengah.',
+            'instagram_url': 'https://instagram.com/asmtransport_kebumen',
+            'facebook_url': 'https://facebook.com',
+            'tiktok_url': 'https://tiktok.com',
+            'youtube_url': 'https://youtube.com',
+        }
     return {
         'site_settings': settings_dict,
         'current_year': datetime.utcnow().year,

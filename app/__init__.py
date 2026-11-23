@@ -8,8 +8,14 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.environ.get('FLASK_ENV', 'default')
 
-    app = Flask(__name__)
-    app.config.from_object(config.get(config_name, config['default']))
+    cfg_class = config.get(config_name, config['default'])
+    is_serverless = getattr(cfg_class, 'IS_SERVERLESS', False)
+
+    # Use /tmp for instance path if running on serverless
+    instance_path = '/tmp/instance' if is_serverless else None
+
+    app = Flask(__name__, instance_path=instance_path)
+    app.config.from_object(cfg_class)
 
     # Ensure instance and upload folders exist safely
     try:

@@ -5,14 +5,29 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
 
+def is_serverless_env():
+    """Detect if the application is running in a serverless/read-only environment like Vercel."""
+    if any(os.environ.get(k) for k in ['VERCEL', 'VERCEL_ENV', 'AWS_LAMBDA_FUNCTION_NAME', 'LAMBDA_TASK_ROOT']):
+        return True
+    # Test if basedir is writable
+    test_file = os.path.join(basedir, '.write_test')
+    try:
+        with open(test_file, 'w') as f:
+            f.write('1')
+        os.remove(test_file)
+        return False
+    except (OSError, IOError, PermissionError):
+        return True
+
+
 class Config:
     """Base application configuration."""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'asm-secret-super-secure-key-v2-kebumen-transport-2026'
     
-    is_vercel = bool(os.environ.get('VERCEL'))
+    IS_SERVERLESS = is_serverless_env()
 
     # Database
-    if is_vercel and not os.environ.get('DATABASE_URL'):
+    if IS_SERVERLESS and not os.environ.get('DATABASE_URL'):
         db_path = '/tmp/asm_transport.db'
     else:
         db_path = os.path.join(basedir, 'instance', 'asm_transport.db')
@@ -21,7 +36,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Uploads
-    if is_vercel:
+    if IS_SERVERLESS:
         UPLOAD_FOLDER = '/tmp/uploads'
     else:
         UPLOAD_FOLDER = os.path.join(basedir, 'app', 'static', 'uploads')

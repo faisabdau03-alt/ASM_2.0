@@ -5,15 +5,11 @@ from app.extensions import db
 from app.models import User, Fleet, Booking, Service, Gallery, Testimonial, SiteSetting
 from app.utils import slugify, generate_booking_code
 
-app = create_app()
+def _run_seed_process():
+    # Create database tables if they do not exist
+    db.create_all()
 
-
-def seed_data():
-    with app.app_context():
-        # Create database tables if they do not exist
-        db.create_all()
-
-        print("[1/7] Inisialisasi Akun Administrator...")
+    print("[1/7] Inisialisasi Akun Administrator...")
         admin = User.query.filter_by(username='admin').first()
         if not admin:
             admin = User(
@@ -349,6 +345,16 @@ def seed_data():
         print("\n=== SEMUA DATA AWAL (SEED) BERHASIL DIINISIALISASI DENGAN SUKSES! ===")
 
 
+def seed_data(target_app=None):
+    """Seed data entrypoint that safely accepts an optional Flask app instance."""
+    if target_app:
+        with target_app.app_context():
+            _run_seed_process()
+    else:
+        _run_seed_process()
+
+
 if __name__ == '__main__':
-    seed_data()
+    _cli_app = create_app()
+    seed_data(_cli_app)
 

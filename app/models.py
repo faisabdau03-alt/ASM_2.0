@@ -176,25 +176,35 @@ class SiteSetting(db.Model):
 
     @classmethod
     def get(cls, key, default=None):
-        setting = cls.query.filter_by(key=key).first()
-        if setting and setting.value is not None:
-            return setting.value
+        try:
+            setting = cls.query.filter_by(key=key).first()
+            if setting and setting.value is not None:
+                return setting.value
+        except Exception:
+            pass
         return default
 
     @classmethod
     def set(cls, key, value, label=None, group='general'):
-        setting = cls.query.filter_by(key=key).first()
-        if not setting:
-            setting = cls(key=key, value=value, label=label or key, group=group)
-            db.session.add(setting)
-        else:
-            setting.value = value
-            if label:
-                setting.label = label
-            if group:
-                setting.group = group
-        db.session.commit()
-        return setting
+        try:
+            setting = cls.query.filter_by(key=key).first()
+            if not setting:
+                setting = cls(key=key, value=value, label=label or key, group=group)
+                db.session.add(setting)
+            else:
+                setting.value = value
+                if label:
+                    setting.label = label
+                if group:
+                    setting.group = group
+            db.session.commit()
+            return setting
+        except Exception:
+            try:
+                db.session.rollback()
+            except Exception:
+                pass
+            return None
 
     def __repr__(self):
         return f'<SiteSetting {self.key}>'
