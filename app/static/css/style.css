@@ -277,13 +277,13 @@ img {
    =================================================================== */
 .hero-section {
     position: relative;
-    min-height: 86vh;
+    min-height: 75vh;
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, rgba(10, 19, 36, 0.92) 0%, rgba(16, 29, 56, 0.85) 100%),
                 url('/static/images/hero-bus.jpg') center center / cover no-repeat;
     color: #ffffff;
-    padding: 5rem 0 6rem 0;
+    padding: 3rem 0 3.25rem 0;
 }
 
 .hero-badge {
@@ -293,20 +293,20 @@ img {
     background: rgba(242, 140, 40, 0.15);
     border: 1px solid rgba(242, 140, 40, 0.4);
     color: var(--asm-orange);
-    padding: 0.4rem 1rem;
+    padding: 0.3rem 0.85rem;
     border-radius: 9999px;
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.04em;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.75rem;
 }
 
 .hero-title {
-    font-size: 3rem;
+    font-size: 2.625rem; /* ~42px, compact & modern */
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.2;
     color: #ffffff;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.85rem;
 }
 
 .hero-title span {
@@ -314,19 +314,19 @@ img {
 }
 
 .hero-subtitle {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: #CBD5E1;
-    max-width: 620px;
-    margin-bottom: 2rem;
-    line-height: 1.7;
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
 }
 
 .hero-features {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-    padding-top: 2rem;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
@@ -334,20 +334,20 @@ img {
     display: flex;
     align-items: center;
     gap: 0.65rem;
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     color: #E2E8F0;
 }
 
 .hero-feature-item i {
     color: var(--asm-orange);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
 /* Quick Booking Pill Card on Hero */
 .hero-booking-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 2rem;
+    padding: 1.6rem 1.75rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
     color: var(--asm-text-main);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -910,14 +910,14 @@ img {
    =================================================================== */
 @media (max-width: 991.98px) {
     .hero-title {
-        font-size: 2.25rem;
+        font-size: 2.1rem;
     }
     .hero-section {
         min-height: auto;
-        padding: 4rem 0;
+        padding: 2.75rem 0;
     }
     .hero-booking-card {
-        margin-top: 2.5rem;
+        margin-top: 1.75rem;
     }
     .section-title {
         font-size: 1.85rem;
@@ -925,6 +925,9 @@ img {
 }
 
 @media (max-width: 575.98px) {
+    .hero-section {
+        padding: 2rem 0;
+    }
     .brand-logo-img {
         height: 34px;
     }
